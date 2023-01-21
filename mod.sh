@@ -14,7 +14,7 @@ if [ -n "$1" ]; then
             curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/update.sh | tac | tac | sudo bash -s -- $2 d
             ;;
         "un")
-            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | tac | tac | sudo bash -s -- d
+            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | tac | tac | sudo bash -s -- d # detached, avoid whiptail
             ;;
         *)
             # usage is up or un optionally followed by un or up
