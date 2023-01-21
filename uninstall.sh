@@ -2,7 +2,6 @@
 
 pihole_current=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
 adminlte_current=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
-pihole_ftl_current=$(pihole -v | grep "FTL" | cut -d ' ' -f 6)
 
 echo "Reverting files..."
 
