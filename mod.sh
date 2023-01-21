@@ -8,13 +8,13 @@ fi
 if [ -n "$1" ]; then
     case "$1" in
         "in")
-            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/install.sh | tac | tac | sudo bash
+            curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/install.sh | sudo bash
             ;;
         "up")
-            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/update.sh | tac | tac | sudo bash -s -- $2 d
+            curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/update.sh | sudo bash -s -- $2 d
             ;;
         "un")
-            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | tac | tac | sudo bash -s -- d # detached, avoid whiptail
+            curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- d # detached, avoid whiptail
             ;;
         *)
             # usage is up or un optionally followed by un or up
