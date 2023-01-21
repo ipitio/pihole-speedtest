@@ -14,7 +14,7 @@ if [[ ! "$pihole_current" < "$pihole_latest" ]] && [[ ! "$adminlte_current" < "$
 fi
 
 curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- d
-PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
+#PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 
 if [ "$1" == "un" ]; then
     exit 0
@@ -23,6 +23,7 @@ fi
 echo "Updating Speedtest Mod..."
 
 cd /var/www/html
+rm -rf new_admin
 git clone https://github.com/ipitio/AdminLTE new_admin
 cd /opt/pihole/
 wget -O webpage.sh.mod https://github.com/ipitio/pi-hole/raw/ipitio/advanced/Scripts/webpage.sh
