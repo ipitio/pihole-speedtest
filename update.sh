@@ -8,11 +8,11 @@ fi
 sudo apt update
 sudo apt install jq -y
 
-whiptail --title "Pi-hole Speedtest Mod Updater and Uninstaller" --msgbox "Update or Uninstall the Mod. \nSupport : https://github.com/arevindh/pihole-speedtest " 8 78
+whiptail --title "Pi-hole Speedtest Mod Updater and Uninstaller" --msgbox "Update or Uninstall the Mod. \nSupport : https://github.com/ipitio/pihole-speedtest " 8 78
 uninstall=${1:-""}
 
-pihole_latest=$(curl -s https://api.github.com/repos/arevindh/pi-hole/releases/latest | grep tag_name | cut -d '"' -f 4)
-adminlte_latest=$(curl -s https://api.github.com/repos/arevindh/AdminLTE/releases/latest | grep tag_name | cut -d '"' -f 4)
+pihole_latest=$(curl -s https://api.github.com/repos/ipitio/pi-hole/releases/latest | grep tag_name | cut -d '"' -f 4)
+adminlte_latest=$(curl -s https://api.github.com/repos/ipitio/AdminLTE/releases/latest | grep tag_name | cut -d '"' -f 4)
 pihole_ftl_latest=$(curl -s https://api.github.com/repos/pi-hole/FTL/releases/latest | grep tag_name | cut -d '"' -f 4)
 
 pihole_current=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
@@ -31,7 +31,7 @@ if ! ( whiptail --title "Pi-hole Speedtest Mod Updater and Uninstaller" --yesno 
 fi
 
 echo "Proceeding..."
-curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | bash
+curl -sSL https://github.com/ipitio/pihole-speedtest/raw/master/uninstall.sh | bash
 
 pihole -up
 
@@ -49,16 +49,16 @@ rm -rf pihole_admin
 rm -rf admin_bak
 rm -rf org_admin
 mv admin org_admin
-git clone https://github.com/arevindh/AdminLTE admin
+git clone https://github.com/ipitio/AdminLTE admin
 
 #Update latest webpage.sh for speedtest-mod
 cd /opt/pihole/
 mv webpage.sh webpage.sh.org
-wget https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
+wget https://github.com/ipitio/pi-hole/raw/master/advanced/Scripts/webpage.sh
 chmod +x webpage.sh
 
 mv version.sh version.sh.org
-wget https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/version.sh
+wget https://github.com/ipitio/pi-hole/raw/master/advanced/Scripts/version.sh
 chmod +x version.sh
 
 #Update version info

@@ -17,13 +17,13 @@ fi
 if [ -n "$1" ]; then
     case "$1" in
         "in")
-            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/install.sh | bash
+            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/master/install.sh | bash
             ;;
         "up")
-            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/update.sh | bash -s -- $2
+            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/master/update.sh | bash -s -- $2
             ;;
         "un")
-            curl -sSL https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | bash
+            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/master/uninstall.sh | bash
             ;;
         *)
             # usage is up or un optionally followed by un or up
