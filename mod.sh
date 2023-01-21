@@ -19,12 +19,10 @@ if [ -n "$1" ]; then
         *)
             # usage is up or un optionally followed by un or up
             echo "Usage: $0 [up [un]|un]"
-            rm -f /tmp/pimod.txt
             exit 1
             ;;
     esac
     if [ $? -eq 0 ]; then
-        rm -f /tmp/pimod.txt
         exit 0
     fi
 
