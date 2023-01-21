@@ -28,7 +28,7 @@ if [ -d /var/www/html/admin ]; then
     mv admin mod_admin
 fi
 mv org_admin admin
-cd -
+cd /opt/pihole/
 cp webpage.sh webpage.sh.mod
 cp version.sh version.sh.mod
 mv webpage.sh.org webpage.sh
