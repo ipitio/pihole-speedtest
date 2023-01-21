@@ -13,8 +13,8 @@ if [[ ! "$pihole_current" < "$pihole_latest" ]] && [[ ! "$adminlte_current" < "$
     exit 0
 fi
 
-curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- d
-#PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
+curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | tac | tac | sudo bash -s -- d
+PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 
 if [ "$1" == "un" ]; then
     exit 0
