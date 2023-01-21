@@ -1,8 +1,5 @@
 #!/bin/bash -e
 
-sudo apt update
-sudo apt install jq -y
-
 whiptail --title "Pi-hole Speedtest Mod Updater and Uninstaller" --msgbox "Update or Uninstall the Mod. \nSupport : https://github.com/ipitio/pihole-speedtest " 8 78
 
 pihole_latest=$(curl -s https://api.github.com/repos/ipitio/pi-hole/releases/latest | grep tag_name | cut -d '"' -f 4)
