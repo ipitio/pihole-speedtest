@@ -4,7 +4,8 @@ if [ $EUID != 0 ]; then
     sudo "$0" "$@"
     exit $?
 fi
-
+# log that we are sudo in tmp
+echo "got sudo" >> /tmp/pimod.log
 if [ -n "$1" ]; then
     case "$1" in
         "in")
@@ -17,11 +18,11 @@ if [ -n "$1" ]; then
             curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- d # detached, avoid whiptail
             ;;
         *)
-            # usage is up or un optionally followed by un or up
             echo "Usage: $0 [up [un]|un]"
             exit 1
             ;;
     esac
+    echo "Done." >> /tmp/pimod.log
     if [ $? -eq 0 ]; then
         rm -rf /var/www/html/mod_admin
         rm -f /opt/pihole/webpage.sh.mod
