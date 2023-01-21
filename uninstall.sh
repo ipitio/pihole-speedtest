@@ -20,7 +20,7 @@ fi
 cd /opt/pihole/
 mv webpage.sh webpage.sh.mod
 mv version.sh version.sh.mod
-if [ -f /opt/pihole/webpage.sh.org ]; then && [ -f /opt/pihole/version.sh.org ]; then
+if [ -f /opt/pihole/webpage.sh.org ] && [ -f /opt/pihole/version.sh.org ]; then
     mv webpage.sh.org webpage.sh
     mv version.sh.org version.sh
 else
