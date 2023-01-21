@@ -7,8 +7,10 @@ pihole_ftl_current=$(pihole -v | grep "FTL" | cut -d ' ' -f 6)
 echo "Reverting files..."
 
 cd /var/www/html
-rm -rf mod_admin
-mv admin mod_admin
+if [ -d /var/www/html/admin ]; then
+    rm -rf mod_admin
+    mv admin mod_admin
+fi
 if [ -d /var/www/html/org_admin ]; then
     mv org_admin admin
 else
