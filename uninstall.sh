@@ -18,20 +18,22 @@ else
 fi
 
 cd /opt/pihole/
-cp webpage.sh webpage.sh.mod
-cp version.sh version.sh.mod
-if [ -f /opt/pihole/webpage.sh.org ] && [ -f /opt/pihole/version.sh.org ]; then
+mv webpage.sh webpage.sh.mod
+mv version.sh version.sh.mod
+if [ -f /opt/pihole/webpage.sh.org ]; then && [ -f /opt/pihole/version.sh.org ]; then
     mv webpage.sh.org webpage.sh
     mv version.sh.org version.sh
 else
-    cd ..
-    mv pihole mod_pihole
-    git clone https://github.com/pi-hole/pi-hole pihole
-    cd pihole
+    git clone https://github.com/pi-hole/pi-hole /tmp/pihole-revert
+    cd /tmp/pihole-revert
     git checkout $pihole_current
+    mv advanced/Scripts/webpage.sh /opt/pihole/webpage.sh
+    mv advanced/Scripts/version.sh /opt/pihole/version.sh
+    cd -
+    rm -rf /tmp/pihole-revert
+    chmod +x webpage.sh
+    chmod +x version.sh
 fi
-rm -f /opt/pihole/webpage.sh.mod
-rm -f /opt/pihole/version.sh.mod
 
 echo "Files reverted."
 exit 0
