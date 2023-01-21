@@ -25,15 +25,11 @@ echo "Installing Speedtest Mod..."
 cd /var/www/html
 rm -rf new_admin
 git clone https://github.com/ipitio/AdminLTE new_admin
-cd /opt/pihole/
-wget -O webpage.sh.mod https://github.com/ipitio/pi-hole/raw/ipitio/advanced/Scripts/webpage.sh
-wget -O version.sh.mod https://github.com/ipitio/pi-hole/raw/ipitio/advanced/Scripts/version.sh
-chmod +x webpage.sh.mod
-chmod +x version.sh.mod
-cp webpage.sh webpage.sh.org
-cp version.sh version.sh.org
-mv webpage.sh.mod webpage.sh
-mv version.sh.mod version.sh
+cd /opt/
+git clone https://github.com/ipitio/pi-hole new_pihole
+rm -rf org_pihole
+mv pihole org_pihole
+mv new_pihole pihole
 cd -
 rm -rf pihole_admin
 rm -rf admin_bak
