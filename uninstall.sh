@@ -22,6 +22,7 @@ if [ ! -d /var/www/html/org_admin ]; then
     git clone https://github.com/pi-hole/AdminLTE org_admin
     cd org_admin
     git checkout $adminlte_current >/dev/null 2>&1
+    cd -
 fi
 if [ -d /var/www/html/admin ]; then
     rm -rf mod_admin
