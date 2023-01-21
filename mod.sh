@@ -42,5 +42,4 @@ if [ -n "$1" ]; then
         fi
     fi
     echo "Please try again or try manually."
-    exit 1
 fi
