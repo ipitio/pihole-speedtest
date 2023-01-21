@@ -22,13 +22,13 @@ fi
 if [ -n "$1" ]; then
     case "$1" in
         "in")
-            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/master/install.sh | tac | tac | sudo bash
+            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/install.sh | tac | tac | sudo bash
             ;;
         "up")
-            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/master/update.sh | tac | tac | sudo bash -s -- $2
+            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/update.sh | tac | tac | sudo bash -s -- $2
             ;;
         "un")
-            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/master/uninstall.sh | tac | tac | sudo bash
+            curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | tac | tac | sudo bash
             ;;
         *)
             # usage is up or un optionally followed by un or up
