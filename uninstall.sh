@@ -1,5 +1,13 @@
 #!/bin/bash -e
 
+if [[ "$1" != "d" ]]; then
+    whiptail --title "Pi-hole Speedtest Mod" --msgbox "Uninstall Mod. \nSupport : https://github.com/ipitio/pihole-speedtest " 8 78
+    if ! (whiptail --title "Pi-hole Speedtest Mod" --yesno "Proceed?" 8 78); then
+        echo "Uninstall cancelled."
+        exit 0
+    fi
+fi
+
 pihole_current=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
 adminlte_current=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
 
@@ -37,3 +45,9 @@ else
 fi
 
 echo "Files reverted."
+
+if [[ "$1" != "d" ]]; then
+    whiptail --title "Pi-hole Speedtest Mod" --msgbox "Uninstall complete" 8 78
+else
+    echo "Uninstall complete"
+fi
