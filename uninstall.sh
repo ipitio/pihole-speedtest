@@ -38,4 +38,3 @@ else
 fi
 
 echo "Files reverted."
-exit 0

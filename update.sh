@@ -56,4 +56,3 @@ chmod +x version.sh
 pihole updatechecker local
 
 whiptail --title "Pihole Speedtest Mod" --msgbox "Update complete" 8 78
-exit 0
