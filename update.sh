@@ -14,7 +14,7 @@ fi
 
 curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | tac | tac | sudo bash -s -- d
 
-#PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
+PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 
 if [ "$1" == "un" ]; then
     rm -rf /var/www/html/mod_admin
