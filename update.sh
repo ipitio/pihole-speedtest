@@ -21,7 +21,7 @@ pihole_ftl_current=$(pihole -v | grep "FTL" | cut -d ' ' -f 6)
 
 if [[ "$pihole_current" >= "$pihole_latest" ]] && [[ "$adminlte_current" >= "$adminlte_latest" ]] && [[ "$pihole_ftl_current" >= "$pihole_ftl_latest" ]] && [[ "$uninstall" != "un" ]]; then
     echo "Pi-hole is already up to date."
-    exit 0
+    #exit 0
 fi
 
 # if user does not want to proceed, exit
