@@ -24,7 +24,6 @@ if [ -n "$1" ]; then
     if [ $? -eq 0 ]; then
         rm -rf /var/www/html/mod_admin
         rm -f /opt/pihole/webpage.sh.mod
-        rm -f /opt/pihole/version.sh.mod
         exit 0
     fi
 
@@ -39,7 +38,6 @@ if [ -n "$1" ]; then
             mv mod_admin admin
             cd /opt/pihole/
             mv webpage.sh.mod webpage.sh
-            mv version.sh.mod version.sh
             echo "Files restored."
         fi
     fi

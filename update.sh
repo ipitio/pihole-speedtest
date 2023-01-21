@@ -10,7 +10,7 @@ pihole_ftl_current=$(pihole -v | grep "FTL" | cut -d ' ' -f 6)
 
 if [[ ! "$pihole_current" < "$pihole_latest" ]] && [[ ! "$adminlte_current" < "$adminlte_latest" ]] && [[ ! "$pihole_ftl_current" < "$pihole_ftl_latest" ]] && [[ "$1" != "un" ]]; then
     echo "Pi-hole is already up to date"
-    #exit 0
+    exit 0
 fi
 
 curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- d
@@ -25,11 +25,11 @@ echo "Installing Speedtest Mod..."
 cd /var/www/html
 rm -rf new_admin
 git clone https://github.com/ipitio/AdminLTE new_admin
-cd /opt/
-git clone https://github.com/ipitio/pi-hole new_pihole
-rm -rf org_pihole
-mv pihole org_pihole
-mv new_pihole pihole
+cd /opt/pihole/
+wget -O webpage.sh.mod https://github.com/ipitio/pi-hole/raw/ipitio/advanced/Scripts/webpage.sh
+chmod +x webpage.sh.mod
+cp webpage.sh webpage.sh.org
+mv webpage.sh.mod webpage.sh
 cd -
 rm -rf pihole_admin
 rm -rf admin_bak
