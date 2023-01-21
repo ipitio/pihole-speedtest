@@ -16,7 +16,7 @@ adminlte_latest=$(curl -s https://api.github.com/repos/ipitio/AdminLTE/releases/
 pihole_ftl_latest=$(curl -s https://api.github.com/repos/pi-hole/FTL/releases/latest | grep tag_name | cut -d '"' -f 4)
 
 pihole_current=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
-adminlte_current=$(pihole -v | grep "Web" | cut -d ' ' -f 6)
+adminlte_current=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
 pihole_ftl_current=$(pihole -v | grep "FTL" | cut -d ' ' -f 6)
 
 if [[ "$pihole_current" >= "$pihole_latest" ]] && [[ "$adminlte_current" >= "$adminlte_latest" ]] && [[ "$pihole_ftl_current" >= "$pihole_ftl_latest" ]] && [[ "$uninstall" != "un" ]]; then
@@ -31,7 +31,7 @@ if ! ( whiptail --title "Pi-hole Speedtest Mod Updater and Uninstaller" --yesno 
 fi
 
 echo "Proceeding..."
-curl -sSL https://github.com/ipitio/pihole-speedtest/raw/master/uninstall.sh | bash
+curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | bash
 
 PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 
@@ -54,11 +54,11 @@ git clone https://github.com/ipitio/AdminLTE admin
 #Update latest webpage.sh for speedtest-mod
 cd /opt/pihole/
 mv webpage.sh webpage.sh.org
-wget https://github.com/ipitio/pi-hole/raw/master/advanced/Scripts/webpage.sh
+wget https://github.com/ipitio/pi-hole/raw/ipitio/advanced/Scripts/webpage.sh
 chmod +x webpage.sh
 
 mv version.sh version.sh.org
-wget https://github.com/ipitio/pi-hole/raw/master/advanced/Scripts/version.sh
+wget https://github.com/ipitio/pi-hole/raw/ipitio/advanced/Scripts/version.sh
 chmod +x version.sh
 
 #Update version info
