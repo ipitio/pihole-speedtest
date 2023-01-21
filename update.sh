@@ -1,15 +1,9 @@
 #!/bin/bash -e
 
-if [ $EUID != 0 ]; then
-    sudo "$0" "$@"
-    exit $?
-fi
-
 sudo apt update
 sudo apt install jq -y
 
 whiptail --title "Pi-hole Speedtest Mod Updater and Uninstaller" --msgbox "Update or Uninstall the Mod. \nSupport : https://github.com/ipitio/pihole-speedtest " 8 78
-uninstall=${1:-""}
 
 pihole_latest=$(curl -s https://api.github.com/repos/ipitio/pi-hole/releases/latest | grep tag_name | cut -d '"' -f 4)
 adminlte_latest=$(curl -s https://api.github.com/repos/ipitio/AdminLTE/releases/latest | grep tag_name | cut -d '"' -f 4)
@@ -19,7 +13,7 @@ pihole_current=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
 adminlte_current=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
 pihole_ftl_current=$(pihole -v | grep "FTL" | cut -d ' ' -f 6)
 
-if [[ "$pihole_current" >= "$pihole_latest" ]] && [[ "$adminlte_current" >= "$adminlte_latest" ]] && [[ "$pihole_ftl_current" >= "$pihole_ftl_latest" ]] && [[ "$uninstall" != "un" ]]; then
+if [[ "$pihole_current" >= "$pihole_latest" ]] && [[ "$adminlte_current" >= "$adminlte_latest" ]] && [[ "$pihole_ftl_current" >= "$pihole_ftl_latest" ]] && [[ "$1" != "un" ]]; then
     echo "Pi-hole is already up to date."
     #exit 0
 fi
@@ -31,7 +25,7 @@ if ! ( whiptail --title "Pi-hole Speedtest Mod Updater and Uninstaller" --yesno 
 fi
 
 echo "Proceeding..."
-curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | bash
+curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash
 
 PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 
