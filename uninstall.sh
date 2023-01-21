@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 pihole_current=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
-adminlte_current=$(pihole -v | grep "Web" | cut -d ' ' -f 6)
+adminlte_current=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
 pihole_ftl_current=$(pihole -v | grep "FTL" | cut -d ' ' -f 6)
 
 echo "Reverting files..."
@@ -16,7 +16,7 @@ if [ -d /var/www/html/org_admin ]; then
 else
     git clone https://github.com/pi-hole/AdminLTE admin
     cd admin
-    git checkout $adminlte_current
+    git checkout $adminlte_current >/dev/null 2>&1
 fi
 
 cd /opt/pihole/
@@ -28,7 +28,7 @@ if [ -f /opt/pihole/webpage.sh.org ] && [ -f /opt/pihole/version.sh.org ]; then
 else
     git clone https://github.com/pi-hole/pi-hole /tmp/pihole-revert
     cd /tmp/pihole-revert
-    git checkout $pihole_current
+    git checkout $pihole_current >/dev/null 2>&1
     mv advanced/Scripts/webpage.sh /opt/pihole/webpage.sh
     mv advanced/Scripts/version.sh /opt/pihole/version.sh
     cd -
