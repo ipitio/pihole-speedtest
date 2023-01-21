@@ -1,7 +1,5 @@
 #!/bin/bash -e
 
-echo "in uninstall.sh" >> /tmp/pimod.log
-
 pihole_current=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
 adminlte_current=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
 
