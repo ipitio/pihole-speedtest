@@ -27,7 +27,7 @@ if [[ "$2" != "d" ]]; then
 fi
 
 echo "Proceeding..."
-curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | tac | tac | sudo bash
+curl -sSL https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | tac | tac | sudo bash -s -- d
 
 #PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 
