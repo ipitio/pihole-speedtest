@@ -34,3 +34,5 @@ unin() {
 
     echo "$(date) - Uninstall complete"
 }
+
+unin "$@"

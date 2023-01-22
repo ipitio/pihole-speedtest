@@ -43,3 +43,5 @@ up() {
 
     echo "$(date) - Install complete"
 }
+
+up "$@"
