@@ -47,8 +47,4 @@ mod() {
     fi
 }
 
-{
-  {
-    mod "$@" 3>&- | sudo tee -a -- "$LOG_FILE" >&3 3>&-
-  } 2>&1 | sudo tee -a -- "$LOG_FILE" >&2 3>&-
-} 3> "$LOG_FILE" 3>&1
+mod "$@" 2>&1 | sudo tee -- "$LOG_FILE"
