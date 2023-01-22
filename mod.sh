@@ -13,10 +13,10 @@ mod() {
                 curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/install.sh | sudo bash
                 ;;
             "up")
-                curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/update.sh | sudo bash -s -- $2 d
+                curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/update.sh | sudo bash -s -- $2
                 ;;
             "un")
-                curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- d # detached, avoid whiptail
+                curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash
                 ;;
             *)
                 echo "Usage: $0 [up [un]|un]"
@@ -31,7 +31,7 @@ mod() {
 
         echo "$(date) - Something went wrong." | sudo tee -a /var/log/pimod.log
         if [ "$1" == "up" ] || [ "$1" == "un" ]; then
-            if [ ! -d /var/www/html/mod_admin ] || [ ! -f /opt/pihole/webpage.sh.mod ] || [ ! -f /opt/pihole/version.sh.mod ]; then
+            if [ ! -d /var/www/html/mod_admin ] || [ ! -f /opt/pihole/webpage.sh.mod ]; then
                 echo "$(date) - Speedtest Mod is not backed up, did not restore automatically."
             else
                 echo "$(date) - Restoring files..."
