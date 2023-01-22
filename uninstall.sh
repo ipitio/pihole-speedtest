@@ -1,10 +1,11 @@
 #!/bin/bash -e
+LOG_FILE="/var/log/pimod.log"
 
 unin() {
     pihole_current=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
     adminlte_current=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
 
-    echo "Uninstalling Speedtest Mod..."
+    echo "$(date) - Uninstalling Speedtest Mod..."
 
     cd /opt/pihole/
     if [ ! -f /opt/pihole/webpage.sh.org ]; then

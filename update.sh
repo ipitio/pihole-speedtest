@@ -1,4 +1,5 @@
 #!/bin/bash -e
+LOG_FILE="/var/log/pimod.log"
 
 up() {
     pihole_latest=$(curl -s https://api.github.com/repos/ipitio/pi-hole/releases/latest | grep tag_name | cut -d '"' -f 4)
