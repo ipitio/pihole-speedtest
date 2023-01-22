@@ -4,23 +4,23 @@ LOG_FILE="/var/log/pimod.log"
 help() {
     echo "(Re)install Speedtest Mod."
     echo "Usage: sudo $0 [up [un]|un] [db]"
-    echo "up - update Pi-hole"
-    echo "un - uninstall mod"
-    echo "db - flush database"
+    echo "up - update Pi-hole too"
+    echo "un - only uninstall mod"
+    echo "db - flush database too"
     exit 1
 }
 
 mod() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+        help
+    fi
+
     if [ $EUID != 0 ]; then
         sudo "$0" "$@"
         exit $?
     fi
-
-    if [ ! -n "$1" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-            help
-    fi
         
-    curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/install.sh | sudo bash -s -- $1 $2 $3
+    curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/install.sh | sudo bash -s -- $*
     if [ $? -eq 0 ]; then
         rm -rf /var/www/html/mod_admin
         rm -f /opt/pihole/webpage.sh.mod

@@ -27,4 +27,9 @@ if [ -d /var/www/html/admin ]; then
 fi
 mv org_admin admin
 
+if [ "$1" == "db" ]; then
+	echo "$(date) - Removing database..."
+	rm -f /etc/pihole/speedtest.db
+fi
+
 echo "$(date) - Uninstall complete"

@@ -5,12 +5,8 @@ if [ ! -f /usr/local/bin/pihole ]; then
 	curl -sSLN https://install.pi-hole.net | sudo bash
 fi
 
-curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash
+curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- $3
 if [ "$1" == "un" ]; then
-	if [ "$2" == "db" ]; then
-		echo "$(date) - Removing database..."
-		rm -f /etc/pihole/pihole-FTL.db
-	fi
 	exit 0
 fi
 
@@ -18,10 +14,6 @@ if [ "$1" == "up" ]; then
 	echo "$(date) - Updating Pi-hole..."
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 	if [ "$2" == "un" ]; then
-		if [ "$3" == "db" ]; then
-			echo "$(date) - Removing database..."
-			rm -f /etc/pihole/pihole-FTL.db
-		fi
 		exit 0
 	fi
 fi
@@ -34,7 +26,7 @@ if [ ! -f /usr/bin/speedtest ]; then
 	echo "$(date) - Installing speedtest..."
 	# https://www.speedtest.net/apps/cli
 	curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
-	sudo apt-get install speedtest
+	sudo apt-get install speedtest -y
 fi
 
 echo "$(date) - Installing Speedtest Mod..."
