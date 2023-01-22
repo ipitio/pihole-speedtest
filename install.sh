@@ -12,10 +12,10 @@ fi
 
 curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash
 if [ "$1" == "un" ]; then
-	#if [ "$2" == "db" ]; then
-	#	echo "$(date) - Removing database..."
-	#	rm -f /etc/pihole/pihole-FTL.db
-	#fi
+	if [ "$2" == "db" ]; then
+		echo "$(date) - Removing database..."
+		rm -f /etc/pihole/pihole-FTL.db
+	fi
 	exit 0
 fi
 
@@ -23,10 +23,10 @@ if [ "$1" == "up" ]; then
 	echo "$(date) - Updating Pi-hole..."
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 	if [ "$2" == "un" ]; then
-		#if [ "$3" == "db" ]; then
-		#	echo "$(date) - Removing database..."
-		#	rm -f /etc/pihole/pihole-FTL.db
-		#fi
+		if [ "$3" == "db" ]; then
+			echo "$(date) - Removing database..."
+			rm -f /etc/pihole/pihole-FTL.db
+		fi
 		exit 0
 	fi
 fi
@@ -66,7 +66,7 @@ rm -rf org_admin
 mv admin org_admin
 mv new_admin admin
 
-if [ ! -f /etc/pihole/speedtest.db ]; then
+if [ ! -f /etc/pihole/speedtest.db ] || [ $1 == "db" ]; then
 	echo "$(date) - Initializing database..."
 	cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 fi
