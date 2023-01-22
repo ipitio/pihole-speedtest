@@ -20,7 +20,7 @@ mod() {
         exit $?
     fi
         
-    curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/install.sh | sudo bash -s -- $*
+    curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/install.sh | sudo bash -s -- $*
     if [ $? -eq 0 ]; then
         rm -rf /var/www/html/mod_admin
         rm -f /opt/pihole/webpage.sh.mod

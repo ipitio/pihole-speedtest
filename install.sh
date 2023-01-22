@@ -7,7 +7,7 @@ fi
 
 
 db=$([ "$1" == "up" ] && echo "$3" || [ "$1" == "un" ] && echo "$2" || echo "$1")
-curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | sudo bash -s -- $db
+curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- $db
 if [ "$1" == "un" ]; then
 	exit 0
 fi
@@ -35,9 +35,9 @@ echo "$(date) - Installing Speedtest Mod..."
 
 cd /var/www/html
 rm -rf new_admin
-git clone https://github.com/arevindh/AdminLTE new_admin
+git clone https://github.com/ipitio/AdminLTE new_admin
 cd /opt/pihole/
-wget -O webpage.sh.mod https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
+wget -O webpage.sh.mod https://github.com/ipitio/pi-hole/raw/ipitio/advanced/Scripts/webpage.sh
 chmod +x webpage.sh.mod
 cp webpage.sh webpage.sh.org
 mv webpage.sh.mod webpage.sh
