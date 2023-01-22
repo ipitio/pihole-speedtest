@@ -5,7 +5,9 @@ if [ ! -f /usr/local/bin/pihole ]; then
 	curl -sSLN https://install.pi-hole.net | sudo bash
 fi
 
-curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- $3
+
+db=$([ "$1" == "up" ] && echo "$3" || [ "$1" == "un" ] && echo "$2" || echo "$1")
+curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/uninstall.sh | sudo bash -s -- $db
 if [ "$1" == "un" ]; then
 	exit 0
 fi
@@ -19,7 +21,7 @@ if [ "$1" == "up" ]; then
 fi
 
 PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
-apt-get install $PHP_VERSION-sqlite3 jq -y
+apt-get install sqlite3 $PHP_VERSION-sqlite3 jq -y
 apt-get remove speedtest-cli -y
 
 if [ ! -f /usr/bin/speedtest ]; then
@@ -33,9 +35,9 @@ echo "$(date) - Installing Speedtest Mod..."
 
 cd /var/www/html
 rm -rf new_admin
-git clone https://github.com/ipitio/AdminLTE new_admin
+git clone https://github.com/arevindh/AdminLTE new_admin
 cd /opt/pihole/
-wget -O webpage.sh.mod https://github.com/ipitio/pi-hole/raw/ipitio/advanced/Scripts/webpage.sh
+wget -O webpage.sh.mod https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/webpage.sh
 chmod +x webpage.sh.mod
 cp webpage.sh webpage.sh.org
 mv webpage.sh.mod webpage.sh
@@ -48,7 +50,10 @@ mv new_admin admin
 
 if [ ! -f /etc/pihole/speedtest.db ] || [ $1 == "db" ]; then
 	echo "$(date) - Initializing database..."
-	cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+	if [ -f /etc/pihole/speedtest.db ]; then
+		mv /etc/pihole/speedtest.db speedtest.db.old
+	fi
+    cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 fi
 
 pihole updatechecker local
