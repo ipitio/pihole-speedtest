@@ -1,5 +1,4 @@
 #!/bin/bash -e
-LOG_FILE="/var/log/pimod.log"
 
 up() {
     pihole_latest=$(curl -s https://api.github.com/repos/ipitio/pi-hole/releases/latest | grep tag_name | cut -d '"' -f 4)
@@ -43,9 +42,3 @@ up() {
 
     echo "$(date) - Install complete"
 }
-
-{
-  {
-    up "$@" 3>&- | sudo tee -a -- "$LOG_FILE" >&3 3>&-
-  } 2>&1 | sudo tee -a -- "$LOG_FILE" >&2 3>&-
-} 3> "$LOG_FILE" 3>&1

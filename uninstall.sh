@@ -1,5 +1,4 @@
 #!/bin/bash -e
-LOG_FILE="/var/log/pimod.log"
 
 unin() {
     pihole_current=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
@@ -34,9 +33,3 @@ unin() {
 
     echo "$(date) - Uninstall complete"
 }
-
-{
-  {
-    unin "$@" 3>&- | sudo tee -a -- "$LOG_FILE" >&3 3>&-
-  } 2>&1 | sudo tee -a -- "$LOG_FILE" >&2 3>&-
-} 3> "$LOG_FILE" 3>&1
