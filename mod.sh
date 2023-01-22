@@ -8,21 +8,7 @@ mod() {
     fi
 
     if [ -n "$1" ]; then
-        case "$1" in
-            "in")
-                curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/install.sh | sudo bash
-                ;;
-            "up")
-                curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/update.sh | sudo bash -s -- $2
-                ;;
-            "un")
-                curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash
-                ;;
-            *)
-                echo "Usage: $0 [up [un]|un]"
-                exit 1
-                ;;
-        esac
+        curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/install.sh | sudo bash -s -- $1 $2
         if [ $? -eq 0 ]; then
             rm -rf /var/www/html/mod_admin
             rm -f /opt/pihole/webpage.sh.mod
