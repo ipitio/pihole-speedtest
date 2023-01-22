@@ -1,10 +1,5 @@
 #!/bin/bash -e
 
-if [ -f /usr/local/bin/speedtest-cli ]; then
-	echo "$(date) - Removing speedtest-cli..."
-	apt-get remove speedtest-cli -y
-fi
-
 if [ ! -f /usr/local/bin/pihole ]; then
 	echo "$(date) - Installing Pi-hole..."
 	curl -sSLN https://install.pi-hole.net | sudo bash
@@ -32,15 +27,8 @@ if [ "$1" == "up" ]; then
 fi
 
 PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
-if [ ! -f /usr/lib/$PHP_VERSION/mods-available/sqlite3.so ]; then
-	echo "$(date) - Installing sqlite3..."
-	apt-get install $PHP_VERSION-sqlite3 -y
-fi
-
-if [ ! -f /usr/bin/jq ]; then
-	echo "$(date) - Installing jq..."
-	apt-get install jq -y
-fi
+apt-get install $PHP_VERSION-sqlite3 jq -y
+apt-get remove speedtest-cli -y
 
 if [ ! -f /usr/bin/speedtest ]; then
 	echo "$(date) - Installing speedtest..."
