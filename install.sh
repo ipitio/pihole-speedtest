@@ -40,6 +40,8 @@ chmod +x advanced/Scripts/webpage.sh
 db=$([ "$1" == "up" ] && echo "$3" || [ "$1" == "un" ] && echo "$2" || echo "$1")
 curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- $db
 if [ "$1" == "un" ]; then
+	rm -rf /opt/pihole/webpage.sh.*
+	rm -rf /var/www/html/*_admin
 	exit 0
 fi
 
@@ -47,6 +49,8 @@ if [ "$1" == "up" ]; then
 	echo "$(date) - Updating Pi-hole..."
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 	if [ "$2" == "un" ]; then
+		rm -rf /opt/pihole/webpage.sh.*
+		rm -rf /var/www/html/*_admin
 		exit 0
 	fi
 fi
@@ -55,11 +59,12 @@ echo "$(date) - Installing Speedtest Mod..."
 
 cd /opt/
 cp pihole/webpage.sh pihole/webpage.sh.org
-cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh.mod
-rm -rf mod_pihole
+cp new_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh.mod
+rm -rf new_pihole
 cd /var/www/html
 rm -rf org_admin
 mv admin org_admin
+cp -r new_admin mod_admin
 mv new_admin admin
 cd -
 cp pihole/webpage.sh.mod pihole/webpage.sh
