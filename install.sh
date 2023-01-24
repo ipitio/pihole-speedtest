@@ -53,7 +53,11 @@ fi
 
 echo "$(date) - Modding Pi-hole..."
 
-cd /opt/pihole/advanced/Scripts/
+if [ -d /opt/pihole/advanced/Scripts/ ]; then
+    cd /opt/pihole/advanced/Scripts/
+else
+    cd /opt/pihole/
+fi
 cp webpage.sh webpage.sh.org
 cp webpage.sh.mod webpage.sh
 cd /var/www/html

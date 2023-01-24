@@ -41,7 +41,11 @@ if [ -d /var/www/html/admin ]; then
     mv admin mod_admin
 fi
 mv org_admin admin
-cd /opt/pihole/advanced/Scripts/
+if [ -d /opt/pihole/advanced/Scripts/ ]; then
+    cd /opt/pihole/advanced/Scripts/
+else
+    cd /opt/pihole/
+fi
 cp webpage.sh webpage.sh.mod
 mv webpage.sh.org webpage.sh
 
