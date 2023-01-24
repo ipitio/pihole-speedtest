@@ -4,19 +4,19 @@ echo "$(date) - Installing Speedtest Mod..."
 
 cd /var/www/html
 rm -rf mod_admin
-git clone https://github.com/arevindh/AdminLTE mod_admin
-cd mod_admin
-git fetch --tags
-latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-git checkout $latestTag
+git clone https://github.com/ipitio/AdminLTE mod_admin
+#cd mod_admin
+#git fetch --tags
+#latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+#git checkout $latestTag
 
 cd /opt/
 rm -rf mod_pihole
-git clone https://github.com/arevindh/pi-hole mod_pihole
+git clone -b ipitio https://github.com/ipitio/pi-hole mod_pihole
 cd mod_pihole
-git fetch --tags
-latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-git checkout $latestTag
+#git fetch --tags
+#latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+#git checkout $latestTag
 chmod +x webpage.sh
 
 if [ ! -f /usr/local/bin/pihole ]; then
