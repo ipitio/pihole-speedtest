@@ -17,7 +17,7 @@ cd mod_pihole
 #git fetch --tags
 #latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 #git checkout $latestTag
-chmod +x webpage.sh
+chmod +x advanced/Scripts/webpage.sh
 
 if [ ! -f /usr/local/bin/pihole ]; then
 	echo "$(date) - Installing Pi-hole..."
@@ -51,7 +51,7 @@ fi
 
 echo "$(date) - Modding Pi-hole..."
 
-cd /opt/pihole/
+cd /opt/pihole/advanced/Scripts/
 cp webpage.sh webpage.sh.org
 cp webpage.sh.mod webpage.sh
 cd /var/www/html

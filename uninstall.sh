@@ -9,8 +9,9 @@ if [ ! -f /opt/pihole/webpage.sh.org ]; then
     cd org_pihole
     currVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
     git checkout $currVer >/dev/null 2>&1
+    chmod +x advanced/Scripts/webpage.sh
+    cp advanced/Scripts/webpage.sh ../pihole/advanced/Scripts/webpage.sh.org
     cd -
-    cp org_pihole/webpage.sh pihole/webpage.sh.org
     rm -rf org_pihole
 fi
 
@@ -40,7 +41,7 @@ if [ -d /var/www/html/admin ]; then
     mv admin mod_admin
 fi
 mv org_admin admin
-cd /opt/pihole/
+cd /opt/pihole/advanced/Scripts/
 cp webpage.sh webpage.sh.mod
 mv webpage.sh.org webpage.sh
 
