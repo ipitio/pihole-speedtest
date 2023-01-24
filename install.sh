@@ -67,7 +67,7 @@ if [ ! -f /etc/pihole/speedtest.db ] || [ "$db" == "db" ]; then
 	if [ -f /etc/pihole/speedtest.db ]; then
 		mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
 	fi
-    cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+    cp admin/scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 fi
 
 pihole updatechecker local
