@@ -5,7 +5,7 @@ if [ ! -f /usr/local/bin/pihole ]; then
 	curl -sSLN https://install.pi-hole.net | sudo bash
 fi
 
-echo "$(date) - Verifying dependencies..."
+echo "$(date) - Verifying Dependencies..."
 
 PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
 apt-get install sqlite3 $PHP_VERSION-sqlite3 jq -y
@@ -18,23 +18,23 @@ if [ ! -f /usr/bin/speedtest ]; then
 	sudo apt-get install speedtest -y
 fi
 
-echo "$(date) - Downloading Speedtest Mod..."
+echo "$(date) - Downloading Latest Speedtest Mod..."
 
 cd /var/www/html
 rm -rf mod_admin
 git clone https://github.com/ipitio/AdminLTE mod_admin
-#cd mod_admin
-#git fetch --tags
-#latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-#git checkout $latestTag
+cd mod_admin
+git fetch --tags
+latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+git checkout $latestTag
 
 cd /opt/
 rm -rf mod_pihole
 git clone -b ipitio https://github.com/ipitio/pi-hole mod_pihole
 cd mod_pihole
-#git fetch --tags
-#latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-#git checkout $latestTag
+git fetch --tags
+latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+git checkout $latestTag
 chmod +x advanced/Scripts/webpage.sh
 
 db=$([ "$1" == "up" ] && echo "$3" || [ "$1" == "un" ] && echo "$2" || echo "$1")
@@ -63,7 +63,7 @@ mv admin org_admin
 cp -r mod_admin admin
 
 if [ ! -f /etc/pihole/speedtest.db ] || [ "$db" == "db" ]; then
-	echo "$(date) - Initializing database..."
+	echo "$(date) - Initializing Database..."
 	if [ -f /etc/pihole/speedtest.db ]; then
 		mv /etc/pihole/speedtest.db speedtest.db.old
 	fi
@@ -72,4 +72,4 @@ fi
 
 pihole updatechecker local
 
-echo "$(date) - Install complete"
+echo "$(date) - Install Complete"
