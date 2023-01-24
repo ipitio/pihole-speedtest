@@ -29,9 +29,9 @@ latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 #git checkout $latestTag
 
 cd /opt/
-rm -rf mod_pihole
-git clone -b ipitio https://github.com/ipitio/pi-hole mod_pihole
-cd mod_pihole
+rm -rf new_pihole
+git clone -b ipitio https://github.com/ipitio/pi-hole new_pihole
+cd new_pihole
 git fetch --tags
 latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 #git checkout $latestTag
