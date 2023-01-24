@@ -55,12 +55,14 @@ echo "$(date) - Installing Speedtest Mod..."
 
 cd /opt/
 cp pihole/webpage.sh pihole/webpage.sh.org
-cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh
+cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh.mod
 rm -rf mod_pihole
 cd /var/www/html
 rm -rf org_admin
 mv admin org_admin
 mv new_admin admin
+cd -
+cp pihole/webpage.sh.mod pihole/webpage.sh
 
 if [ ! -f /etc/pihole/speedtest.db ] || [ "$db" == "db" ]; then
 	echo "$(date) - Initializing Database..."
