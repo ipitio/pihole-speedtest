@@ -38,6 +38,8 @@ if [ "$1" == "up" ]; then
 	fi
 fi
 
+echo "$(date) - Verifying dependencies..."
+
 PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
 apt-get install sqlite3 $PHP_VERSION-sqlite3 jq -y
 apt-get remove speedtest-cli -y
