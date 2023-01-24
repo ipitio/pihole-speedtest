@@ -24,6 +24,19 @@ if [ ! -f /usr/local/bin/pihole ]; then
 	curl -sSLN https://install.pi-hole.net | sudo bash
 fi
 
+echo "$(date) - Verifying dependencies..."
+
+PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
+apt-get install sqlite3 $PHP_VERSION-sqlite3 jq -y
+apt-get remove speedtest-cli -y
+
+if [ ! -f /usr/bin/speedtest ]; then
+	echo "$(date) - Installing speedtest..."
+	# https://www.speedtest.net/apps/cli
+	curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+	sudo apt-get install speedtest -y
+fi
+
 db=$([ "$1" == "up" ] && echo "$3" || [ "$1" == "un" ] && echo "$2" || echo "$1")
 curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- $db
 if [ "$1" == "un" ]; then
@@ -36,19 +49,6 @@ if [ "$1" == "up" ]; then
 	if [ "$2" == "un" ]; then
 		exit 0
 	fi
-fi
-
-echo "$(date) - Verifying dependencies..."
-
-PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
-apt-get install sqlite3 $PHP_VERSION-sqlite3 jq -y
-apt-get remove speedtest-cli -y
-
-if [ ! -f /usr/bin/speedtest ]; then
-	echo "$(date) - Installing speedtest..."
-	# https://www.speedtest.net/apps/cli
-	curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
-	sudo apt-get install speedtest -y
 fi
 
 echo "$(date) - Modding Pi-hole..."
