@@ -21,9 +21,9 @@ fi
 echo "$(date) - Downloading Latest Speedtest Mod..."
 
 cd /var/www/html
-rm -rf mod_admin
-git clone https://github.com/ipitio/AdminLTE mod_admin
-cd mod_admin
+rm -rf new_admin
+git clone https://github.com/ipitio/AdminLTE new_admin
+cd new_admin
 git fetch --tags
 latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 #git checkout $latestTag
@@ -60,7 +60,7 @@ rm -rf mod_pihole
 cd /var/www/html
 rm -rf org_admin
 mv admin org_admin
-cp -r mod_admin admin
+mv new_admin admin
 
 if [ ! -f /etc/pihole/speedtest.db ] || [ "$db" == "db" ]; then
 	echo "$(date) - Initializing Database..."
