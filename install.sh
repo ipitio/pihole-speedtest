@@ -53,9 +53,10 @@ fi
 
 echo "$(date) - Modding Pi-hole..."
 
-cd /opt/pihole/
-cp webpage.sh webpage.sh.org
-cp webpage.sh.mod webpage.sh
+cd /opt/
+cp pihole/webpage.sh pihole/webpage.sh.org
+cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh
+rm -rf mod_pihole
 cd /var/www/html
 rm -rf org_admin
 mv admin org_admin
