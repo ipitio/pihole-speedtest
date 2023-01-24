@@ -1,24 +1,5 @@
 #!/bin/bash -e
 
-echo "$(date) - Installing Speedtest Mod..."
-
-cd /var/www/html
-rm -rf mod_admin
-git clone https://github.com/ipitio/AdminLTE mod_admin
-#cd mod_admin
-#git fetch --tags
-#latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-#git checkout $latestTag
-
-cd /opt/
-rm -rf mod_pihole
-git clone -b ipitio https://github.com/ipitio/pi-hole mod_pihole
-cd mod_pihole
-#git fetch --tags
-#latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-#git checkout $latestTag
-chmod +x advanced/Scripts/webpage.sh
-
 if [ ! -f /usr/local/bin/pihole ]; then
 	echo "$(date) - Installing Pi-hole..."
 	curl -sSLN https://install.pi-hole.net | sudo bash
@@ -37,6 +18,25 @@ if [ ! -f /usr/bin/speedtest ]; then
 	sudo apt-get install speedtest -y
 fi
 
+echo "$(date) - Downloading Speedtest Mod..."
+
+cd /var/www/html
+rm -rf mod_admin
+git clone https://github.com/ipitio/AdminLTE mod_admin
+#cd mod_admin
+#git fetch --tags
+#latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+#git checkout $latestTag
+
+cd /opt/
+rm -rf mod_pihole
+git clone -b ipitio https://github.com/ipitio/pi-hole mod_pihole
+cd mod_pihole
+#git fetch --tags
+#latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+#git checkout $latestTag
+chmod +x advanced/Scripts/webpage.sh
+
 db=$([ "$1" == "up" ] && echo "$3" || [ "$1" == "un" ] && echo "$2" || echo "$1")
 curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/uninstall.sh | sudo bash -s -- $db
 if [ "$1" == "un" ]; then
@@ -51,7 +51,7 @@ if [ "$1" == "up" ]; then
 	fi
 fi
 
-echo "$(date) - Modding Pi-hole..."
+echo "$(date) - Installing Speedtest Mod..."
 
 cd /opt/
 cp pihole/webpage.sh pihole/webpage.sh.org
