@@ -1,11 +1,11 @@
 #!/bin/bash -e
 
-if [ "$1" != "un" ]; then
-	if [ ! -f /usr/local/bin/pihole ]; then
-		echo "$(date) - Installing Pi-hole..."
-		curl -sSL https://install.pi-hole.net | sudo bash
-	fi
+if [ ! -f /usr/local/bin/pihole ]; then
+	echo "$(date) - Installing Pi-hole..."
+	curl -sSL https://install.pi-hole.net | sudo bash
+fi
 
+if [ "$1" != "un" ]; then
 	echo "$(date) - Verifying Dependencies..."
 
 	apt-get remove -y speedtest-cli
@@ -49,7 +49,7 @@ if [ "$1" == "up" ]; then
 	echo "$(date) - Updating Pi-hole..."
 	cd /var/www/html/admin
 	git reset --hard origin/master
-	git checkout master
+	git switch -f master
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 	if [ "$2" == "un" ]; then
 		rm -rf /opt/pihole/webpage.sh.*
