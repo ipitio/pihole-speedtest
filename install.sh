@@ -47,8 +47,12 @@ fi
 
 if [ "$1" == "up" ]; then
 	echo "$(date) - Updating Pi-hole..."
-	cd /opt/pihole/
+	cd /opt/pihole
 	git reset --hard origin/master
+	git checkout master
+	cd /var/www/html/admin
+	git reset --hard origin/master
+	git checkout master
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 	if [ "$2" == "un" ]; then
 		rm -rf /opt/pihole/webpage.sh.*
