@@ -20,7 +20,7 @@ mod() {
         exit $?
     fi
     
-    printf "Thanks for using Speedtest Mod!\n"
+    printf "Thanks for using Speedtest Mod!\nScripts by @ipitio\n\n"
         
     curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/install.sh | sudo bash -s -- $*
     if [ $? -eq 0 ]; then

@@ -46,11 +46,5 @@ mv org_admin admin
 cd /opt/pihole/
 cp webpage.sh webpage.sh.mod
 mv webpage.sh.org webpage.sh
-git fetch --tags -q
-git reset --hard origin/master
-currVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 3)
-git checkout $currVer
-
-pihole updatechecker local
 
 echo "$(date) - Uninstall Complete"
