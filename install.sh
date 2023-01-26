@@ -27,8 +27,8 @@ if [ "$1" != "un" ]; then
 				dist=${UBUNTU_CODENAME}
 				[ -z "$dist" ] && dist=${VERSION_CODENAME}
 			fi
-			echo "os=$os dist=$dist 7"
-			wget -O /tmp/script.deb.sh https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh
+			
+			wget -O /tmp/script.deb.sh https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh > /dev/null 2>&1
 			chmod +x /tmp/script.deb.sh
 			os=$os dist=$dist /tmp/script.deb.sh
 			rm -f /tmp/script.deb.sh
