@@ -11,7 +11,7 @@ if [ "$1" != "un" ]; then
 	if [ ! -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
 		echo "$(date) - Adding speedtest source..."
 		# https://www.speedtest.net/apps/cli
-		curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/ookla.sh | sudo bash | sudo bash
+		curl -sSLN https://github.com/ipitio/pihole-speedtest/raw/ipitio/ookla.sh | sudo bash
 	fi
 	PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
 	apt-get install -y speedtest-cli- sqlite3 $PHP_VERSION-sqlite3 jq speedtest
