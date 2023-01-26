@@ -64,7 +64,7 @@ detect_os ()
       . /etc/os-release
 
       # TODO: get all debian and ubuntu derivatives
-      derivatives="raspbian linuxMint"
+      derivatives="raspbian linuxmint pop os elementary os zorin os neon"
 
       if [[ "${derivatives}" =~ "${ID}" ]]; then
         os=`echo ${ID_LIKE} | cut -d' ' -f1 | sed 's/"//g'`
