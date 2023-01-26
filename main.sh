@@ -183,7 +183,7 @@ main() {
 			;;
 		up)
 			update $2
-			;;
+			;&
 		*)
 			install $db
 			;;
