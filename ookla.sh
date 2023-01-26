@@ -64,13 +64,14 @@ detect_os ()
       . /etc/os-release
 
       base="ubuntu debian"
-      ID_LIKE=${ID_LIKE//\"/}
+	  os=${ID}
+	  dist=${VERSION_CODENAME}
 
-      if [[ "${base}" =~ "${ID_LIKE}" ]]; then
-        os=${ID_LIKE}
-        dist=${UBUNTU_CODENAME}
-        [ -z "$dist" ] && dist=${VERSION_CODENAME}
-      else
+	  if [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]]; then
+		os=${ID_LIKE%% *}
+		dist=${UBUNTU_CODENAME}
+		[ -z "$dist" ] && dist=${VERSION_CODENAME}
+	  else
         os=${DISTRIB_ID}
         dist=${DISTRIB_CODENAME}
 
