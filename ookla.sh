@@ -63,10 +63,11 @@ detect_os ()
     if [ -e /etc/os-release ]; then
       . /etc/os-release
 
-      base="debian ubuntu"
+      base="ubuntu debian"
+      ID_LIKE=${ID_LIKE//\"/}
 
       if [[ "${base}" =~ "${ID_LIKE}" ]]; then
-        os=`echo ${ID_LIKE} | cut -d' ' -f1 | sed 's/"//g'`
+        os=${ID_LIKE}
         dist=${UBUNTU_CODENAME}
         [ -z "$dist" ] && dist=${VERSION_CODENAME}
       else
