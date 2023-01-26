@@ -60,12 +60,16 @@ detect_os ()
   if [[ ( -z "${os}" ) && ( -z "${dist}" ) ]]; then
     # some systems dont have lsb-release yet have the lsb_release binary and
     # vice-versa
-    if [ -e /etc/lsb-release ]; then
-      . /etc/lsb-release
+    if [ -e /etc/os-release ]; then
+      . /etc/os-release
 
-      if [ "${ID}" = "raspbian" ]; then
-        os=${ID}
-        dist=`cut --delimiter='.' -f1 /etc/debian_version`
+      # TODO: get all debian and ubuntu derivatives
+      derivatives="raspbian linuxMint"
+
+      if [[ "${derivatives}" =~ "${ID}" ]]; then
+        os=`echo ${ID_LIKE} | cut -d' ' -f1 | sed 's/"//g'`
+        dist=${UBUNTU_CODENAME}
+        [ -z "$dist" ] && dist=${VERSION_CODENAME}
       else
         os=${DISTRIB_ID}
         dist=${DISTRIB_CODENAME}
