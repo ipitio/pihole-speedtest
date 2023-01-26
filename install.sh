@@ -25,6 +25,7 @@ if [ "$1" != "un" ]; then
 				dist=${UBUNTU_CODENAME}
 				[ -z "$dist" ] && dist=${VERSION_CODENAME}
 			fi
+			echo "os=$os dist=$dist"
 			curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash os=$os dist=$dist
 		else
 			curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
