@@ -112,6 +112,8 @@ update() {
 	echo "$(date) - Updating Pi-hole..."
 	cd /var/www/html/admin
 	git reset --hard origin/master
+    latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+    git checkout $latestTag
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 	if [ "$1" == "un" ]; then
 		purge
