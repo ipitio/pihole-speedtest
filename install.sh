@@ -27,7 +27,7 @@ if [ "$1" != "un" ]; then
 			fi
 			echo "os=$os dist=$dist 3"
 			wget -O /tmp/script.deb.sh https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh
-			os=$os dist=$dist /tmp/script.deb.sh
+			os=$os dist=$dist /tmp/script.deb.sh | sudo bash
 			rm -f /tmp/script.deb.sh
 		else
 			curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
