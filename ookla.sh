@@ -63,10 +63,9 @@ detect_os ()
     if [ -e /etc/os-release ]; then
       . /etc/os-release
 
-      # TODO: get all debian and ubuntu derivatives
-      derivatives="raspbian linuxmint pop os elementary os zorin os neon"
+      base="debian ubuntu"
 
-      if [[ "${derivatives}" =~ "${ID}" ]]; then
+      if [[ "${base}" =~ "${ID_LIKE}" ]]; then
         os=`echo ${ID_LIKE} | cut -d' ' -f1 | sed 's/"//g'`
         dist=${UBUNTU_CODENAME}
         [ -z "$dist" ] && dist=${VERSION_CODENAME}
