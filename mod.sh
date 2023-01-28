@@ -112,7 +112,7 @@ update() {
 
 uninstall() {
 	echo "$(date) - Restoring Pi-hole..."
-
+	pihole restartdns
 	cd /opt/
 	if [ ! -f /opt/pihole/webpage.sh.org ]; then
 		rm -rf org_pihole
@@ -129,7 +129,7 @@ uninstall() {
 		cd - > /dev/null
 		rm -rf org_pihole
 	fi #LaPinta
-
+	pihole restartdns
 	cd /var/www/html
 	if [ ! -d /var/www/html/org_admin ]; then
 		rm -rf org_admin
