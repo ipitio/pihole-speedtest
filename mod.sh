@@ -115,7 +115,6 @@ uninstall() {
 
 	cd /opt/
 	if [ ! -f /opt/pihole/webpage.sh.org ]; then
-		echo "$(date) - Downloading Pi-hole..."
 		rm -rf org_pihole
 		git clone https://github.com/pi-hole/pi-hole org_pihole 
 		cd org_pihole
@@ -129,11 +128,10 @@ uninstall() {
 		cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
 		cd - > /dev/null
 		rm -rf org_pihole
-	fi
+	fi #LaPinta
 
 	cd /var/www/html
 	if [ ! -d /var/www/html/org_admin ]; then
-		echo "$(date) - Downloading AdminLTE..."
 		rm -rf org_admin
 		git clone https://github.com/pi-hole/AdminLTE org_admin
 		cd org_admin
