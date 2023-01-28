@@ -117,7 +117,7 @@ uninstall() {
 	if [ ! -f /opt/pihole/webpage.sh.org ]; then
 		echo "$(date) - Downloading Pi-hole..."
 		rm -rf org_pihole
-		git clone https://github.com/pi-hole/pi-hole org_pihole
+		git clone https://github.com/pi-hole/pi-hole org_pihole 
 		cd org_pihole
 		git fetch --tags -q
 		localVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 6)
@@ -166,8 +166,6 @@ uninstall() {
 	cp webpage.sh webpage.sh.mod
 	mv webpage.sh.org webpage.sh
 	chmod +x webpage.sh
-
-	pihole updatechecker
 
 	echo "$(date) - Uninstall Complete"
 }
