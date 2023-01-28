@@ -226,7 +226,7 @@ mod() {
         exit $?
     fi
         
-	trap 'restore $1' ERR INT TERM SIGINT SIGTERM SIGKILL SIGQUIT SIGSTOP SIGABRT SIGTSTP
+	#trap 'restore $1' ERR INT TERM SIGINT SIGTERM SIGKILL SIGQUIT SIGSTOP SIGABRT SIGTSTP
     main "$@" && clean || restore $1
 }
 
