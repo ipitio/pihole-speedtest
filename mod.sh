@@ -7,7 +7,6 @@ help() {
     echo "up - update Pi-hole"
     echo "un - remove the mod"
     echo "db - flush database"
-    exit 1
 }
 
 download() {
@@ -91,13 +90,11 @@ install() {
 	pihole updatechecker local
 
 	echo "$(date) - Install Complete"
-	exit 0
 }
 
 purge() {
 	rm -rf /opt/pihole/webpage.sh.*
 	rm -rf /var/www/html/*_admin
-	exit 0
 }
 
 update() {
@@ -106,7 +103,7 @@ update() {
 	git reset --hard origin/master
     git checkout master
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
-	if [ "${1-}" == "db" ]; then
+	if [ "${1-}" == "un" ]; then
 		purge
 	fi
 }
@@ -216,6 +213,7 @@ main() {
 	op=$1
     if [ "$op" == "-h" ] || [ "$op" == "--help" ]; then
         help
+		exit 0
     fi
     if [ $EUID != 0 ]; then
         sudo "$0" "$@"
