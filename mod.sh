@@ -87,7 +87,10 @@ install() {
 	cp pihole/webpage.sh.mod pihole/webpage.sh
 	chmod +x pihole/webpage.sh
 
-	[ -f /etc/pihole/speedtest.db ] || cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+	if [ ! -f /etc/pihole/speedtest.db ]; then
+		cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+		echo "$(date) - Initialized Database"
+	fi
 
 	pihole updatechecker local
 
