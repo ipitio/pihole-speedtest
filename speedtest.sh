@@ -50,14 +50,6 @@ internet() {
     sep="$quote$sep$quote"
     printf "$quote$start$sep$stop$sep$isp$sep$from_ip$sep$server_name$sep$server_dist$sep$server_ping$sep$download$sep$upload$sep$share_url$quote\n"
     sqlite3 /etc/pihole/speedtest.db "insert into speedtest values (NULL, '${start}', '${stop}', '${isp}', '${from_ip}', '${server_name}', ${server_dist}, ${server_ping}, ${download}, ${upload}, '${share_url}');"
-    exit 0
-}
-
-nointernet(){
-    stop=$(date +"%Y-%m-%d %H:%M:%S")
-    echo "No Internet"
-    sqlite3 /etc/pihole/speedtest.db "insert into speedtest values (NULL, '${start}', '${stop}', 'No Internet', '-', '-', 0, 0, 0, 0, '#');"
-    exit 1
 }
 
 tryagain(){
@@ -67,7 +59,7 @@ tryagain(){
         apt-get install -y speedtest-cli- speedtest
     fi
     start=$(date +"%Y-%m-%d %H:%M:%S")
-    speedtest > $FILE && internet || nointernet
+    speedtest > $FILE && internet || exit 1
 }
 
 main() {
@@ -77,6 +69,7 @@ main() {
     fi
     echo "Test has been initiated, please wait."
     speedtest > "$FILE" && internet || tryagain
+    exit 0
 }
     
 main
