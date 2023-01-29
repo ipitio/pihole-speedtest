@@ -16,7 +16,7 @@ download() {
 		curl -sSL https://install.pi-hole.net | sudo bash
 	fi
 
-	if	[ -z "$1" ] || [ "$1" == "up" ]; then
+	if	[ -z "${1-}" ] || [ "$1" == "up" ]; then
 		echo "$(date) - Verifying Dependencies..."
 
 		if [ ! -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
@@ -116,7 +116,7 @@ uninstall() {
 	
 	cd /opt/
 	if [ ! -f /opt/pihole/webpage.sh.org ]; then
-        echo "$(date) - Restoring Pi-hole..."
+        echo "$(date) - Downloading Pi-hole..."
 		rm -rf org_pihole
 		git clone -q https://github.com/pi-hole/pi-hole org_pihole 
 		cd org_pihole
@@ -134,7 +134,7 @@ uninstall() {
 	
 	cd /var/www/html
 	if [ ! -d /var/www/html/org_admin ]; then
-	    echo "$(date) - Restoring AdminLTE..."
+	    echo "$(date) - Downloading AdminLTE..."
 		rm -rf org_admin
 		git clone -q https://github.com/pi-hole/AdminLTE org_admin
 		cd org_admin
