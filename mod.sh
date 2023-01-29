@@ -212,10 +212,10 @@ clean() {
 
 main() {
 	printf "Thanks for using Speedtest Mod!\nScript by @ipitio\n\n"
-	op=$1
-	$2=$2
-	$3=$3
-    if [ "$op" == "-h" ] || [ "$op" == "--help" ]; then
+	uno=$1
+	dos=$2
+	tre=$3
+    if [ "$uno" == "-h" ] || [ "$uno" == "--help" ]; then
         help
     fi
     if [ $EUID != 0 ]; then
@@ -223,17 +223,17 @@ main() {
         exit $?
     fi
 	set -Eeou pipefail
-	trap '[ "$?" -eq "0" ] && clean || abort $op' EXIT
+	trap '[ "$?" -eq "0" ] && clean || abort $uno' EXIT
 
-	db=$([ "$op" == "up" ] && echo "$3" || [ "$op" == "un" ] && echo "$2" || echo "$op")
-	download $op
+	db=$([ "$uno" == "up" ] && echo "$tre" || [ "$uno" == "un" ] && echo "$dos" || echo "$uno")
+	download $uno
 	uninstall $db
-	case $op in
+	case $uno in
 		un)
 			purge
 			;;
 		up)
-			update $2
+			update $dos
 			;&
 		*)
 			install
