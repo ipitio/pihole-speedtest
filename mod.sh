@@ -81,6 +81,7 @@ install() {
 	cd /var/www/html
 	rm -rf org_admin
 	mv admin org_admin
+	rm -rf mod_admin
 	cp -r new_admin mod_admin
 	mv new_admin admin
 	cd - > /dev/null
@@ -105,7 +106,7 @@ update() {
 	git reset --hard origin/master
     git checkout master
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
-	if [ "$1" == "un" ]; then
+	if [ "${1-}" == "db" ]; then
 		purge
 	fi
 }
@@ -147,7 +148,7 @@ uninstall() {
 		cd - > /dev/null
 	fi
 
-	if [ "$1" == "db" ]; then
+	if [ "${1-}" == "db" ]; then
 		echo "$(date) - Configuring Database..."
 		if [ -f /etc/pihole/speedtest.db ]; then
 			mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
@@ -212,28 +213,26 @@ clean() {
 
 main() {
 	printf "Thanks for using Speedtest Mod!\nScript by @ipitio\n\n"
-	uno=$1
-	dos=$2
-	tre=$3
-    if [ "$uno" == "-h" ] || [ "$uno" == "--help" ]; then
+	op=$1
+    if [ "$op" == "-h" ] || [ "$op" == "--help" ]; then
         help
     fi
     if [ $EUID != 0 ]; then
         sudo "$0" "$@"
         exit $?
     fi
-	set -Eeou pipefail
-	trap '[ "$?" -eq "0" ] && clean || abort $uno' EXIT
+	set -Eeuo pipefail
+	trap '[ "$?" -eq "0" ] && clean || abort $op' EXIT
 
-	db=$([ "$uno" == "up" ] && echo "$tre" || [ "$uno" == "un" ] && echo "$dos" || echo "$uno")
-	download $uno
+	db=$([ "$op" == "up" ] && echo "${3-}" || [ "$op" == "un" ] && echo "${2-}" || echo "$op")
+	download $op
 	uninstall $db
-	case $uno in
+	case $op in
 		un)
 			purge
 			;;
 		up)
-			update $dos
+			update ${2-}
 			;&
 		*)
 			install
