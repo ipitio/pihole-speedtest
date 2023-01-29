@@ -87,6 +87,8 @@ install() {
 	cp pihole/webpage.sh.mod pihole/webpage.sh
 	chmod +x pihole/webpage.sh
 
+	[ -f /etc/pihole/speedtest.db ] || cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+
 	pihole updatechecker local
 
 	echo "$(date) - Install Complete"
@@ -95,6 +97,7 @@ install() {
 purge() {
 	rm -rf /opt/pihole/webpage.sh.*
 	rm -rf /var/www/html/*_admin
+	exit 0
 }
 
 update() {
@@ -104,9 +107,7 @@ update() {
     git checkout master
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
 	echo "$(date) - Update Complete"
-	if [ "${1-}" == "un" ]; then
-		purge
-	fi
+	[ "${1-}" == "un" ] && purge
 }
 
 uninstall() {
@@ -120,9 +121,7 @@ uninstall() {
 		git fetch --tags -q
 		localVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 6)
 		remoteVer=$(curl -s https://api.github.com/repos/pi-hole/pi-hole/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]; then
-			remoteVer=$localVer
-		fi
+		[[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]] && remoteVer=$localVer
 		git checkout -q $remoteVer
 		cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
 		cd - > /dev/null
@@ -137,19 +136,14 @@ uninstall() {
 		git fetch --tags -q
 		localVer=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
 		remoteVer=$(curl -s https://api.github.com/repos/pi-hole/AdminLTE/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]; then
-			remoteVer=$localVer
-		fi
+		[[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]] && remoteVer=$localVer
 		git checkout -q $remoteVer
 		cd - > /dev/null
 	fi
 
 	if [ "${1-}" == "db" ]; then
-		echo "$(date) - Configuring Database..."
-		if [ -f /etc/pihole/speedtest.db ]; then
-			mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
-		fi
-		cp scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
+		echo "$(date) - Configured Database"
+		[ -f /etc/pihole/speedtest.db ] && mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
 	fi
 
 	echo "$(date) - Uninstalling Current Speedtest Mod..."
