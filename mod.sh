@@ -103,6 +103,7 @@ update() {
 	git reset --hard origin/master
     git checkout master
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
+	echo "$(date) - Update Complete"
 	if [ "${1-}" == "un" ]; then
 		purge
 	fi
@@ -113,9 +114,8 @@ uninstall() {
 	
 	cd /opt/
 	if [ ! -f /opt/pihole/webpage.sh.org ]; then
-        echo "$(date) - Downloading Pi-hole..."
 		rm -rf org_pihole
-		git clone -q https://github.com/pi-hole/pi-hole org_pihole 
+		git clone https://github.com/pi-hole/pi-hole org_pihole 
 		cd org_pihole
 		git fetch --tags -q
 		localVer=$(pihole -v | grep "Pi-hole" | cut -d ' ' -f 6)
@@ -123,7 +123,7 @@ uninstall() {
 		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]; then
 			remoteVer=$localVer
 		fi
-		git checkout $remoteVer
+		git checkout -q $remoteVer
 		cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
 		cd - > /dev/null
 		rm -rf org_pihole
@@ -131,9 +131,8 @@ uninstall() {
 	
 	cd /var/www/html
 	if [ ! -d /var/www/html/org_admin ]; then
-	    echo "$(date) - Downloading AdminLTE..."
 		rm -rf org_admin
-		git clone -q https://github.com/pi-hole/AdminLTE org_admin
+		git clone https://github.com/pi-hole/AdminLTE org_admin
 		cd org_admin
 		git fetch --tags -q
 		localVer=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
@@ -141,7 +140,7 @@ uninstall() {
 		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]; then
 			remoteVer=$localVer
 		fi
-		git checkout $remoteVer
+		git checkout -q $remoteVer
 		cd - > /dev/null
 	fi
 
