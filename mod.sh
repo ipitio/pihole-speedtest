@@ -175,7 +175,7 @@ abort() {
 	case $1 in
 		up | un)
 			if [ ! -d /var/www/html/mod_admin ] || [ ! -f /opt/pihole/webpage.sh.mod ]; then
-				echo "$(date) -  A restore is not needed or one failed."
+				echo "$(date) - A restore is not needed or one failed."
 			else
 				echo "$(date) - Restoring Files..."
 				cd /var/www/html
@@ -188,7 +188,7 @@ abort() {
 			;;
 		*)
 			if [ ! -d /var/www/html/org_admin ] || [ ! -f /opt/pihole/webpage.sh.org ]; then
-				echo "$(date) -  A restore is not needed or one failed."
+				echo "$(date) - A restore is not needed or one failed."
 			else
 				echo "$(date) - Restoring Files..."
 				cd /var/www/html
