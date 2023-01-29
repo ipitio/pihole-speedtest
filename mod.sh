@@ -170,38 +170,36 @@ uninstall() {
 	echo "$(date) - Uninstall Complete"
 }
 
-main() {
-	db=$([ "$1" == "up" ] && echo "$3" || [ "$1" == "un" ] && echo "$2" || echo "$1")
-	download $1
-	uninstall $db
+abort() {
+    echo "$(date) - Process Aborted" | sudo tee -a /var/log/pimod.log
 	case $1 in
-		un)
-			purge
+		up | un)
+			if [ ! -d /var/www/html/mod_admin ] || [ ! -f /opt/pihole/webpage.sh.mod ]; then
+				echo "$(date) -  A restore is not needed or one failed."
+			else
+				echo "$(date) - Restoring Files..."
+				cd /var/www/html
+				rm -rf admin
+				mv mod_admin admin
+				cd /opt/pihole/
+				mv webpage.sh.mod webpage.sh
+				echo "$(date) - Files Restored."
+			fi
 			;;
-		up)
-			update $2
-			;&
 		*)
-			install
+			if [ ! -d /var/www/html/org_admin ] || [ ! -f /opt/pihole/webpage.sh.org ]; then
+				echo "$(date) -  A restore is not needed or one failed."
+			else
+				echo "$(date) - Restoring Files..."
+				cd /var/www/html
+				rm -rf admin
+				mv org_admin admin
+				cd /opt/pihole/
+				mv webpage.sh.org webpage.sh
+				echo "$(date) - Files Restored."
+			fi
 			;;
 	esac
-}
-
-restore() {
-    echo "$(date) - Process Aborted" | sudo tee -a /var/log/pimod.log
-    if [ "$1" == "up" ] || [ "$1" == "un" ]; then
-        if [ ! -d /var/www/html/mod_admin ] || [ ! -f /opt/pihole/webpage.sh.mod ]; then
-            echo "$(date) -  A restore is not needed or one failed."
-        else
-            echo "$(date) - Restoring Files..."
-            cd /var/www/html
-            rm -rf admin
-            mv mod_admin admin
-            cd /opt/pihole/
-            mv webpage.sh.mod webpage.sh
-            echo "$(date) - Files Restored."
-        fi
-    fi
     echo "$(date) - Please try again or try manually."
     exit 1
 }
@@ -212,20 +210,34 @@ clean() {
     exit 0
 }
 
-mod() {
-    printf "Thanks for using Speedtest Mod!\nScript by @ipitio\n\n"
-
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+main() {
+	printf "Thanks for using Speedtest Mod!\nScript by @ipitio\n\n"
+	op=$1
+    if [ "$op" == "-h" ] || [ "$op" == "--help" ]; then
         help
     fi
-
     if [ $EUID != 0 ]; then
         sudo "$0" "$@"
         exit $?
     fi
-        
-	#trap 'restore $1' ERR INT TERM SIGINT SIGTERM SIGKILL SIGQUIT SIGSTOP SIGABRT SIGTSTP
-    main "$@" && clean || restore $1
+	set -Eeou pipefail
+	trap '[ "$?" -eq "0" ] && clean || abort $op' EXIT
+
+	db=$([ "$op" == "up" ] && echo "$3" || [ "$op" == "un" ] && echo "$2" || echo "$op")
+	download $op
+	uninstall $db
+	case $op in
+		un)
+			purge
+			;;
+		up)
+			update $2
+			;&
+		*)
+			install
+			;;
+	esac
+	exit 0
 }
 
-mod "$@" 2>&1 | sudo tee -- "$LOG_FILE"
+main "$@" 2>&1 | sudo tee -- "$LOG_FILE"
