@@ -26,7 +26,7 @@ download() {
 				base="ubuntu debian"
 				os=${ID}
 				dist=${VERSION_CODENAME}
-				if [ ! -z "${ID_LIKE-}" ] && [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]]; then
+				if [ ! -z "${ID_LIKE-}" ] && [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]] && [ "${os}" != "ubuntu" ]; then
 					os=${ID_LIKE%% *}
 					[ -z "${UBUNTU_CODENAME-}" ] && UBUNTU_CODENAME=$(/usr/bin/lsb_release -cs)
 					dist=${UBUNTU_CODENAME}
