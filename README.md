@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/pihole-speedtest/community](https://badges.gitter.im/pihole-speedtest/community.svg)](https://gitter.im/pihole-speedtest/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/TW9TfyM)
 
-## By me a coffee
+## Buy me a ☕️
 
 Buy me a ☕️ if you like my projects :)
 
@@ -18,7 +18,7 @@ The arguments can be any, all, or none of `up`, `un`, and `db`, but they must be
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash
 ```
 
-#### Update
+#### Ucoffeepdate
 
 ```bash
 curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo bash -s up
@@ -35,6 +35,10 @@ curl -sSLN https://github.com/arevindh/pihole-speedtest/raw/master/mod.sh | sudo
 [Update Instructions](https://github.com/arevindh/pihole-speedtest/wiki/Updating--Speedtest-Mod)
 
 ## Update
+
+**June 8 2023**  
+
+Pi-hole 5.17.1 FTL 5.23, Web 5.20.1
 
 **Jan 5 2023**  
 
