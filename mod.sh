@@ -144,10 +144,12 @@ uninstall() {
 			remoteVer=$localVer
 		fi
 		git checkout -q $remoteVer
+		echo "$remoteVer"
 		cd - >/dev/null
 	fi
 
 	if [ "${1-}" == "db" ] && [ -f /etc/pihole/speedtest.db ]; then
+		echo "$(date) - Flushing Database..."
 		mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
 		echo "$(date) - Configured Database"
 	fi
