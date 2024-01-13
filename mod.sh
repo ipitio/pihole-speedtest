@@ -136,18 +136,24 @@ uninstall() {
 	if [ ! -d /var/www/html/org_admin ]; then
 		rm -rf org_admin
 		git clone https://github.com/pi-hole/AdminLTE org_admin
+		echo "cloned"
 		cd org_admin
+		echo "in admin"
 		git fetch --tags -q
+		echo "fetched"
 		localVer=$(pihole -v | grep "AdminLTE" | cut -d ' ' -f 6)
+		echo "$localVer"
 		remoteVer=$(curl -s https://api.github.com/repos/pi-hole/AdminLTE/releases/latest | grep "tag_name" | cut -d '"' -f 4)
+		echo "$remoteVer"
 		if [[ "$localVer" < "$remoteVer" && "$localVer" == *.* ]]; then
 			remoteVer=$localVer
 		fi
-		git checkout -q $remoteVer
 		echo "$remoteVer"
+		git checkout -q $remoteVer
+		echo "restored"
 		cd - >/dev/null
 	fi
-
+	echo "$(pwd)"
 	if [ "${1-}" == "db" ] && [ -f /etc/pihole/speedtest.db ]; then
 		echo "$(date) - Flushing Database..."
 		mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
