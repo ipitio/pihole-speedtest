@@ -14,12 +14,12 @@ clone() {
 	local cd_path=$1
 	local dir_name=$2
 	local repo=$3
-	local repo_name=$4
+	local repo_name=${4-}
 
-	cd "$1"
-	rm -rf "$2"
-	git clone --depth=1 "$3" "$2"
-	cd "$2"
+	cd "$cd_path"
+	rm -rf "$dir_name"
+	git clone --depth=1 "$repo" "$dir_name"
+	cd "$dir_name"
 	git fetch --tags -q
 	latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
 	if [ "$num_args" -eq 4 ]; then
