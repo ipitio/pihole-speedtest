@@ -25,7 +25,7 @@ clone() {
 	if [ "$num_args" -eq 4 ]; then
 		git fetch --unshallow
 		localTag=$(pihole -v | grep "$repo_name" | cut -d ' ' -f 6)
-		if [[ "$localTag" == *.* && "$localTag" < "$latestTag"]]; then
+		if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
 			latestTag=$localTag
 		fi
 	fi
