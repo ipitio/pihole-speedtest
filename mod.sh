@@ -80,7 +80,7 @@ download() {
 install() {
 	echo "$(date) - Installing Speedtest Mod..."
 
-	cd /opt/
+	cd /opt
 	cp pihole/webpage.sh pihole/webpage.sh.org
 	cp new_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh.mod
 	rm -rf new_pihole
@@ -103,10 +103,9 @@ install() {
 }
 
 purge() {
-	echo "$(date) - Purging files..."
+	echo "$(date) - Removing backups..."
 	rm -rf /opt/pihole/webpage.sh.*
 	rm -rf /var/www/html/*_admin
-	echo "$(date) - Purge Complete"
 	exit 0
 }
 
