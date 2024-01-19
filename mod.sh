@@ -10,23 +10,22 @@ help() {
 }
 
 clone() {
-	local num_args=$#
-	local cd_path=$1
-	local dir_name=$2
-	local repo=$3
-	local repo_name=${4-}
+	local path=$1
+	local dest=$2
+	local src=$3
+	local name=${4-} # if set, will keep local tag if older than latest
 
-	cd "$cd_path"
-	rm -rf "$dir_name"
-	git clone --depth=1 "$repo" "$dir_name"
-	cd "$dir_name"
+	cd "$path"
+	rm -rf "$dest"
+	git clone --depth=1 "$src" "$dest"
+	cd "$dest"
 	git fetch --tags -q
-	latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
-	if [ "$num_args" -eq 4 ]; then
-		git fetch --unshallow
-		localTag=$(pihole -v | grep "$repo_name" | cut -d ' ' -f 6)
+	local latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
+	if [ ! -z "$name" ]; then
+		localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
 		if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
 			latestTag=$localTag
+			git fetch --unshallow
 		fi
 	fi
 	git -c advice.detachedHead=false checkout $latestTag
@@ -46,9 +45,9 @@ download() {
 			# https://www.speedtest.net/apps/cli
 			if [ -e /etc/os-release ]; then
 				. /etc/os-release
-				base="ubuntu debian"
-				os=${ID}
-				dist=${VERSION_CODENAME}
+				local base="ubuntu debian"
+				local os=${ID}
+				local dist=${VERSION_CODENAME}
 				if [ ! -z "${ID_LIKE-}" ] && [[ "${base//\"/}" =~ "${ID_LIKE//\"/}" ]] && [ "${os}" != "ubuntu" ]; then
 					os=${ID_LIKE%% *}
 					[ -z "${UBUNTU_CODENAME-}" ] && UBUNTU_CODENAME=$(/usr/bin/lsb_release -cs)
@@ -63,7 +62,7 @@ download() {
 				curl -sSLN https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 			fi
 		fi
-		PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
+		local PHP_VERSION=$(php -v | tac | tail -n 1 | cut -d " " -f 2 | cut -c 1-3)
 		apt-get install -y sqlite3 $PHP_VERSION-sqlite3 jq speedtest-cli- speedtest
 		if [ -f /usr/local/bin/speedtest ]; then
 			rm -f /usr/local/bin/speedtest
@@ -195,7 +194,7 @@ clean() {
 
 main() {
 	printf "Thanks for using Speedtest Mod!\nScript by @ipitio\n\n"
-	op=${1-}
+	local op=${1-}
 	if [ "$op" == "-h" ] || [ "$op" == "--help" ]; then
 		help
 		exit 0
@@ -207,7 +206,7 @@ main() {
 	set -Eeuo pipefail
 	trap '[ "$?" -eq "0" ] && clean || abort $op' EXIT
 
-	db=$([ "$op" == "up" ] && echo "${3-}" || [ "$op" == "un" ] && echo "${2-}" || echo "$op")
+	local db=$([ "$op" == "up" ] && echo "${3-}" || [ "$op" == "un" ] && echo "${2-}" || echo "$op")
 	download $op
 	uninstall $db
 	case $op in
