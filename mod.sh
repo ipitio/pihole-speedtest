@@ -122,34 +122,36 @@ update() {
 }
 
 uninstall() {
-	echo "$(date) - Uninstalling Current Speedtest Mod..."
+	if cat /opt/pihole/webpage.sh | grep -q SpeedTest; then
+		echo "$(date) - Uninstalling Current Speedtest Mod..."
 
-	if [ ! -f /opt/pihole/webpage.sh.org ]; then
-		clone /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
-		cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
-		cd ..
-		rm -rf org_pihole
-	fi
+		if [ ! -f /opt/pihole/webpage.sh.org ]; then
+			clone /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
+			cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
+			cd ..
+			rm -rf org_pihole
+		fi
 
-	if [ ! -d /var/www/html/org_admin ]; then
-		clone /var/www/html org_admin https://github.com/pi-hole/AdminLTE web
+		if [ ! -d /var/www/html/org_admin ]; then
+			clone /var/www/html org_admin https://github.com/pi-hole/AdminLTE web
+		fi
+
+		cd /var/www/html
+		if [ -d /var/www/html/admin ]; then
+			rm -rf mod_admin
+			mv admin mod_admin
+		fi
+		mv org_admin admin
+		cd /opt/pihole/
+		cp webpage.sh webpage.sh.mod
+		mv webpage.sh.org webpage.sh
+		chmod +x webpage.sh
 	fi
 
 	if [ "${1-}" == "db" ] && [ -f /etc/pihole/speedtest.db ]; then
 		echo "$(date) - Flushing Database..."
 		mv -f /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
 	fi
-
-	cd /var/www/html
-	if [ -d /var/www/html/admin ]; then
-		rm -rf mod_admin
-		mv admin mod_admin
-	fi
-	mv org_admin admin
-	cd /opt/pihole/
-	cp webpage.sh webpage.sh.mod
-	mv webpage.sh.org webpage.sh
-	chmod +x webpage.sh
 }
 
 restore() {
