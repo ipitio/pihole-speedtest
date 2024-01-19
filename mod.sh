@@ -23,14 +23,17 @@ clone() {
 	local latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
 	echo "Latest Tag: $latestTag"
 	if [ ! -z "$name" ]; then
+		echo "Checking Local Tag..."
 		localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
 		echo "Local Tag: $localTag"
 		if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
+			echo "Local Tag is older than Latest Tag"
 			latestTag=$localTag
 			git fetch --unshallow
 			echo "Using Local Tag: $latestTag"
 		fi
 	fi
+	echo "Checking out Tag..."
 	git -c advice.detachedHead=false checkout $latestTag
 }
 
