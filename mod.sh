@@ -21,25 +21,28 @@ clone() {
 	cd "$dest"
 	git fetch --tags -q
 	local latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
+	echo "Latest Tag: $latestTag"
 	if [ ! -z "$name" ]; then
 		localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
+		echo "Local Tag: $localTag"
 		if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
 			latestTag=$localTag
 			git fetch --unshallow
+			echo "Using Local Tag: $latestTag"
 		fi
 	fi
 	git -c advice.detachedHead=false checkout $latestTag
 }
 
 download() {
+	echo "$(date) - Installing any missing dependencies..."
+
 	if [ ! -f /usr/local/bin/pihole ]; then
 		echo "$(date) - Installing Pi-hole..."
 		curl -sSL https://install.pi-hole.net | sudo bash
 	fi
 
 	if [ -z "${1-}" ] || [ "$1" == "up" ]; then
-		echo "$(date) - Verifying Dependencies..."
-
 		if [ ! -f /etc/apt/sources.list.d/ookla_speedtest-cli.list ]; then
 			echo "$(date) - Adding speedtest source..."
 			# https://www.speedtest.net/apps/cli
@@ -99,13 +102,13 @@ install() {
 	fi
 
 	pihole updatechecker local
-
-	echo "$(date) - Install Complete"
 }
 
 purge() {
+	echo "$(date) - Purging files..."
 	rm -rf /opt/pihole/webpage.sh.*
 	rm -rf /var/www/html/*_admin
+	echo "$(date) - Purge Complete"
 	exit 0
 }
 
@@ -115,14 +118,13 @@ update() {
 	git reset --hard origin/master
 	git checkout master
 	PIHOLE_SKIP_OS_CHECK=true sudo -E pihole -up
-	echo "$(date) - Update Complete"
 	if [ "${1-}" == "un" ]; then
 		purge
 	fi
 }
 
 uninstall() {
-	echo "$(date) - Restoring Pi-hole..."
+	echo "$(date) - Uninstalling Current Speedtest Mod..."
 
 	if [ ! -f /opt/pihole/webpage.sh.org ]; then
 		clone /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
@@ -136,11 +138,9 @@ uninstall() {
 	fi
 
 	if [ "${1-}" == "db" ] && [ -f /etc/pihole/speedtest.db ]; then
-		mv /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
-		echo "$(date) - Configured Database"
+		echo "$(date) - Flushing Database..."
+		mv -f /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
 	fi
-
-	echo "$(date) - Uninstalling Current Speedtest Mod..."
 
 	cd /var/www/html
 	if [ -d /var/www/html/admin ]; then
@@ -152,8 +152,6 @@ uninstall() {
 	cp webpage.sh webpage.sh.mod
 	mv webpage.sh.org webpage.sh
 	chmod +x webpage.sh
-
-	echo "$(date) - Uninstall Complete"
 }
 
 restore() {
@@ -186,9 +184,11 @@ abort() {
 }
 
 clean() {
+	echo "$(date) - Cleaning up..."
 	rm -rf /var/www/html/mod_admin
 	rm -f /opt/pihole/webpage.sh.mod
 	pihole restartdns
+	echo "$(date) - Clean Complete"
 	exit 0
 }
 
@@ -221,6 +221,7 @@ main() {
 		install
 		;;
 	esac
+	echo "$(date) - Process Complete"
 	exit 0
 }
 
