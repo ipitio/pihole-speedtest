@@ -24,7 +24,8 @@ clone() {
 	echo "Latest Tag: $latestTag"
 	if [ ! -z "$name" ]; then
 		echo "Checking Local Tag for $name..."
-		localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
+		local localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
+		[ "$localTag" == "HEAD" ] && localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 7)
 		echo "Local Tag: $localTag"
 		if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
 			echo "Local Tag is older than Latest Tag"
@@ -137,7 +138,7 @@ uninstall() {
 	fi
 
 	if [ ! -d /var/www/html/org_admin ]; then
-		clone /var/www/html org_admin https://github.com/pi-hole/AdminLTE AdminLTE
+		clone /var/www/html org_admin https://github.com/pi-hole/AdminLTE web
 	fi
 
 	if [ "${1-}" == "db" ] && [ -f /etc/pihole/speedtest.db ]; then
