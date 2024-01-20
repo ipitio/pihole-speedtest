@@ -29,7 +29,7 @@ clone() {
 			git fetch --unshallow
 		fi
 	fi
-	git -c advice.detachedHead=false checkout $latestTag
+	# git -c advice.detachedHead=false checkout $latestTag
 }
 
 download() {
