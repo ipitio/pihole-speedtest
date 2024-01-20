@@ -72,7 +72,7 @@ download() {
 
 		echo "$(date) - Downloading Latest Speedtest Mod..."
 
-		clone /var/www/html new_admin https://github.com/arevindh/AdminLTE
+		clone /var/www/html new_admin https://github.com/ipitio/AdminLTE
 		clone /opt new_pihole https://github.com/arevindh/pi-hole
 	fi
 }
