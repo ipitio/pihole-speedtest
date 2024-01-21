@@ -53,7 +53,6 @@ refresh() {
 		setTags $dest
 		git reset --hard origin/master
 	fi
-	#git -c advice.detachedHead=false checkout $latestTag
 }
 
 download() {
@@ -161,13 +160,16 @@ uninstall() {
 		chmod +x webpage.sh
 	fi
 
-	if [ "${1-}" == "db" ]; then
-		if [ -f /etc/pihole/speedtest.db ] && [ "$(hashFile /etc/pihole/speedtest.db)" != "$(hashFile /var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db)" ]; then
+	local init_db=/var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db
+	local curr_db=/etc/pihole/speedtest.db
+	local last_db=/etc/pihole/speedtest.db.old
+	if [ "${1-}" == "db" ] && [ -f $init_db ]; then
+		if [ -f $curr_db ] && [ "$(hashFile $curr_db)" != "$(hashFile $init_db)" ]; then
 			echo "$(date) - Flushing Database..."
-			mv -f /etc/pihole/speedtest.db /etc/pihole/speedtest.db.old
-		elif [ -f /etc/pihole/speedtest.db.old ]; then
+			mv -f $curr_db $last_db
+		elif [ -f $last_db ]; then
 			echo "$(date) - Restoring Database..."
-			mv -f /etc/pihole/speedtest.db.old /etc/pihole/speedtest.db
+			mv -f $last_db $curr_db
 		fi
 	fi
 }
