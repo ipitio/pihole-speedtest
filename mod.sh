@@ -109,7 +109,7 @@ install() {
 
 	cd /var/www/html
 	if [ -d /var/www/html/admin ]; then
-		mv -f admin mod_admin
+		mv -f admin org_admin
 	fi
 	cp -r mod_admin admin
 	cd /opt
@@ -168,7 +168,7 @@ uninstall() {
 		fi
 
 		cd /var/www/html
-		mv -f org_admin admin
+		cp -r org_admin admin
 		cd /opt/pihole/
 		mv webpage.sh.org webpage.sh
 		chmod +x webpage.sh
