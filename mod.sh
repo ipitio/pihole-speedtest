@@ -48,9 +48,6 @@ refresh() {
 		git remote add upstream $url
 		git fetch upstream -q
 		git reset --hard upstream/master
-		cd ..
-		setTags $dest
-		git -c advice.detachedHead=false checkout $latestTag
 	else # reset
 		setTags $dest
 		git reset --hard origin/master
