@@ -108,7 +108,9 @@ install() {
 	echo "$(date) - Installing Speedtest Mod..."
 
 	cd /var/www/html
-	mv -f admin org_admin
+	if [ -d /var/www/html/admin ]; then
+		mv -f admin mod_admin
+	fi
 	cp -r mod_admin admin
 	cd /opt
 	cp pihole/webpage.sh pihole/webpage.sh.org
