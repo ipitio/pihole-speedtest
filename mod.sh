@@ -55,10 +55,15 @@ refresh() {
 		clone $path $name $url $src
 	elif [ ! -z "$src" ]; then
 		setTags $dest
+		echo "$(date) - Updating $name..."
 		git remote | grep -q upstream && git remote remove upstream
+		echo "$(date) - Adding upstream..."
 		git remote add upstream $url
+		echo "$(date) - Fetching upstream..."
 		git fetch upstream
+		echo "$(date) - Resetting $name..."
 		git reset --hard upstream/master
+		echo "$(date) - Checking out $latestTag..."
 		git -c advice.detachedHead=false checkout $latestTag
 	else
 		setTags $dest
@@ -179,7 +184,9 @@ uninstall() {
 
 		#cd /var/www/html
 		#cp -r org_admin admin
+		echo "$(date) - Restoring Files..."
 		refresh /var/www/html admin https://github.com/pi-hole/AdminLTE web
+		echo "$(date) - Files Restored"
 		cd /opt/pihole/
 		mv webpage.sh.org webpage.sh
 		chmod +x webpage.sh
