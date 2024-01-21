@@ -215,9 +215,6 @@ abort() {
 }
 
 clean() {
-	echo "$(date) - Cleaning up..."
-	rm -rf /var/www/html/mod_admin
-	rm -f /opt/pihole/webpage.sh.mod
 	pihole restartdns
 	echo "$(date) - Done!"
 	exit 0
