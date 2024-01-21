@@ -106,7 +106,7 @@ download() {
 
 		echo "$(date) - Downloading Latest Speedtest Mod..."
 
-		refresh /var/www/html mod_admin https://github.com/ipitio/AdminLTE
+		#refresh /var/www/html mod_admin https://github.com/ipitio/AdminLTE
 		refresh /opt mod_pihole https://github.com/ipitio/pi-hole
 	fi
 }
@@ -114,12 +114,12 @@ download() {
 install() {
 	echo "$(date) - Installing Speedtest Mod..."
 
-	cd /var/www/html
-	if [ -d /var/www/html/admin ]; then
-		rm -rf org_admin
-		mv -f admin org_admin
-	fi
-	# cp -r mod_admin admin
+	#cd /var/www/html
+	#if [ -d /var/www/html/admin ]; then
+	#	rm -rf org_admin
+	#	mv -f admin org_admin
+	#fi
+	#cp -r mod_admin admin
 	refresh /var/www/html admin https://github.com/ipitio/AdminLTE web
 	cd /opt
 	cp pihole/webpage.sh pihole/webpage.sh.org
@@ -172,11 +172,11 @@ uninstall() {
 			rm -rf org_pihole
 		fi
 
-		if [ ! -d /var/www/html/org_admin ]; then
-			refresh /var/www/html org_admin https://github.com/pi-hole/AdminLTE web
-		fi
+		#if [ ! -d /var/www/html/org_admin ]; then
+		#	refresh /var/www/html org_admin https://github.com/pi-hole/AdminLTE web
+		#fi
 
-		cd /var/www/html
+		#cd /var/www/html
 		#cp -r org_admin admin
 		refresh /var/www/html admin https://github.com/pi-hole/AdminLTE web
 		cd /opt/pihole/
