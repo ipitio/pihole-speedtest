@@ -172,7 +172,10 @@ uninstall() {
 		echo "$(date) - Uninstalling Current Speedtest Mod..."
 
 		if [ ! -f /opt/pihole/webpage.sh.org ]; then
-			refresh /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
+			if [ ! -d /opt/org_pihole ]; then
+				refresh /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
+			fi
+			cd /opt/org_pihole
 			cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
 			cd ..
 			rm -rf org_pihole
