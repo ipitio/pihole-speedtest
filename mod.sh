@@ -54,7 +54,7 @@ refresh() {
 		clone $path $name $url
 	else
 		setTags $dest
-		reset --hard origin/master
+		git reset --hard origin/master
 		#git -c advice.detachedHead=false checkout $latestTag
 	fi
 }
