@@ -55,6 +55,7 @@ refresh() {
 		clone $path $name $url $src
 	elif [ ! -z "$src" ]; then
 		setTags $dest
+		git remote | grep -q upstream && git remote remove upstream
 		git remote add upstream $url
 		git fetch upstream --tags -q
 		git reset --hard upstream/master
