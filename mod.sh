@@ -109,7 +109,7 @@ install() {
 
 	cd /var/www/html
 	mv -f admin org_admin
-	mv new_admin admin
+	cp -r mod_admin admin
 	cd /opt
 	cp pihole/webpage.sh pihole/webpage.sh.org
 	cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh
