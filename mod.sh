@@ -109,6 +109,7 @@ install() {
 
 	cd /var/www/html
 	if [ -d /var/www/html/admin ]; then
+		rm -rf mod_admin
 		mv -f admin org_admin
 	fi
 	cp -r mod_admin admin
@@ -214,7 +215,7 @@ abort() {
 	exit 1
 }
 
-clean() {
+commit() {
 	pihole restartdns
 	echo "$(date) - Done!"
 	exit 0
@@ -232,7 +233,7 @@ main() {
 		exit $?
 	fi
 	set -Eeuo pipefail
-	trap '[ "$?" -eq "0" ] && clean || abort $op' EXIT
+	trap '[ "$?" -eq "0" ] && commit || abort $op' EXIT
 
 	local db=$([ "$op" == "up" ] && echo "${3-}" || [ "$op" == "un" ] && echo "${2-}" || echo "$op")
 	download $op
