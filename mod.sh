@@ -57,7 +57,7 @@ refresh() {
 		setTags $dest
 		git remote | grep -q upstream && git remote remove upstream
 		git remote add upstream $url
-		git fetch upstream --tags -q
+		git fetch upstream
 		git reset --hard upstream/master
 		git -c advice.detachedHead=false checkout $latestTag
 	else
