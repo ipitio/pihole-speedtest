@@ -53,6 +53,12 @@ refresh() {
 
 	if [ ! -d $dest ]; then
 		clone $path $name $url $src
+	elif [ ! -z "$src" ]; then
+		setTags $dest
+		git remote add upstream $url
+		git fetch upstream --tags -q
+		git reset --hard upstream/master
+		git -c advice.detachedHead=false checkout $latestTag
 	else
 		setTags $dest
 		git reset --hard origin/master
@@ -113,7 +119,8 @@ install() {
 		rm -rf org_admin
 		mv -f admin org_admin
 	fi
-	cp -r mod_admin admin
+	# cp -r mod_admin admin
+	refresh /var/www/html admin https://github.com/ipitio/AdminLTE web
 	cd /opt
 	cp pihole/webpage.sh pihole/webpage.sh.org
 	cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh
@@ -170,7 +177,8 @@ uninstall() {
 		fi
 
 		cd /var/www/html
-		cp -r org_admin admin
+		#cp -r org_admin admin
+		refresh /var/www/html admin https://github.com/pi-hole/AdminLTE web
 		cd /opt/pihole/
 		mv webpage.sh.org webpage.sh
 		chmod +x webpage.sh
