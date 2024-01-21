@@ -4,9 +4,9 @@ LOG_FILE="/var/log/pimod.log"
 help() {
 	echo "(Re)install Latest Speedtest Mod."
 	echo "Usage: sudo $0 [up] [un] [db]"
-	echo "up - update Pi-hole"
-	echo "un - remove the mod"
-	echo "db - flush database"
+	echo "up - update Pi-hole (along with the Mod)"
+	echo "un - remove the mod (including all backups)"
+	echo "db - flush database (restore for a short while after)"
 }
 
 setTags() {
@@ -48,10 +48,11 @@ refresh() {
 	local path=$1
 	local name=$2
 	local url=$3
+	local src=${4-}
 	local dest=$path/$name
 
 	if [ ! -d $dest ]; then
-		clone $path $name $url
+		clone $path $name $url $src
 	else
 		setTags $dest
 		git reset --hard origin/master
@@ -158,14 +159,14 @@ uninstall() {
 		echo "$(date) - Uninstalling Current Speedtest Mod..."
 
 		if [ ! -f /opt/pihole/webpage.sh.org ]; then
-			clone /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
+			refresh /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
 			cp advanced/Scripts/webpage.sh ../pihole/webpage.sh.org
 			cd ..
 			rm -rf org_pihole
 		fi
 
 		if [ ! -d /var/www/html/org_admin ]; then
-			clone /var/www/html org_admin https://github.com/pi-hole/AdminLTE web
+			refresh /var/www/html org_admin https://github.com/pi-hole/AdminLTE web
 		fi
 
 		cd /var/www/html
