@@ -24,26 +24,6 @@ setTags() {
 	fi
 }
 
-clone() {
-	local path=$1
-	local dest=$2
-	local src=$3
-	local name=${4-} # if set, will keep local tag if older than latest
-
-	cd "$path"
-	rm -rf "$dest"
-	git clone --depth=1 "$src" "$dest"
-	setTags "$dest" "$name"
-	local rightTag=$latestTag
-	if [ ! -z "$name" ]; then
-		if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$rightTag" ]]; then
-			rightTag=$localTag
-			git fetch --unshallow
-		fi
-	fi
-	#git -c advice.detachedHead=false checkout $rightTag
-}
-
 refresh() {
 	local path=$1
 	local name=$2
@@ -51,20 +31,29 @@ refresh() {
 	local src=${4-}
 	local dest=$path/$name
 
-	if [ ! -d $dest ]; then
-		clone $path $name $url $src
-	elif [ ! -z "$src" ]; then
+	if [ ! -d $dest ]; then # replicate
+		cd "$path"
+		rm -rf "$name"
+		git clone --depth=1 "$url" "$name"
+		setTags "$name" "$src"
+		if [ ! -z "$src" ]; then
+			if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
+				latestTag=$localTag
+				git fetch --unshallow
+			fi
+		fi
+	elif [ ! -z "$src" ]; then # revert
 		setTags $dest
 		git remote | grep -q upstream && git remote remove upstream
 		git remote add upstream $url
 		git fetch upstream -q
 		git reset --hard upstream/master
 		git -c advice.detachedHead=false checkout $latestTag
-	else
+	else # reset
 		setTags $dest
 		git reset --hard origin/master
-		#git -c advice.detachedHead=false checkout $latestTag
 	fi
+	#git -c advice.detachedHead=false checkout $latestTag
 }
 
 download() {
