@@ -43,10 +43,12 @@ refresh() {
 			fi
 		fi
 	elif [ ! -z "$src" ]; then # revert
+		setTags $dest
 		git remote | grep -q upstream && git remote remove upstream
 		git remote add upstream $url
 		git fetch upstream -q
 		git reset --hard upstream/master
+		cd ..
 		setTags $dest
 		git -c advice.detachedHead=false checkout $latestTag
 	else # reset
