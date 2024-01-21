@@ -109,7 +109,7 @@ install() {
 
 	cd /var/www/html
 	if [ -d /var/www/html/admin ]; then
-		rm -rf mod_admin
+		rm -rf org_admin
 		mv -f admin org_admin
 	fi
 	cp -r mod_admin admin
