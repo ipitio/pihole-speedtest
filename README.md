@@ -4,6 +4,8 @@
 
 Test your connection speed directly in the Pi-hole web interface!
 
+![Dashboard](assets/dashboard.png)
+
 ## Features
 
 This Speedtest Mod is, as the name suggests, a speedtest mod for Pi-hole. It runs speedtests using [Ookla's `speedtest`](https://www.speedtest.net/apps/cli) and logs the results in a database. You can:
