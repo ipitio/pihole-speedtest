@@ -95,8 +95,8 @@ install() {
 
 	echo "$(date) - Installing Latest Speedtest Mod..."
 
-	refresh /opt mod_pihole https://github.com/ipitio/pi-hole
-	refresh /var/www/html admin https://github.com/ipitio/AdminLTE web
+	download /opt mod_pihole https://github.com/ipitio/pi-hole
+	download /var/www/html admin https://github.com/ipitio/AdminLTE web
 	cd /opt
 	cp pihole/webpage.sh pihole/webpage.sh.org
 	cp mod_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh
