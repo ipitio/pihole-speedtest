@@ -14,7 +14,7 @@ setTags() {
 	local name=${2-}
 	if [ ! -z "$path" ]; then
 		cd "$path"
-		echo "$(date) - Checking for updates...$path"
+		echo "$(date) - Checking for updates..."
 		git fetch origin
 		git fetch --tags
 		echo "$(date) - Getting latest tag..."
