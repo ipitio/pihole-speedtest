@@ -127,7 +127,6 @@ purge() {
 		rm -f /etc/pihole/speedtest.db
 	fi
 
-	pihole -a -su
 	exit 0
 }
 
@@ -171,6 +170,7 @@ uninstall() {
 			rm -rf org_pihole
 		fi
 
+		pihole -a -su
 		download /var/www/html admin https://github.com/pi-hole/AdminLTE web
 		cd /opt/pihole/
 		cp webpage.sh.org webpage.sh
