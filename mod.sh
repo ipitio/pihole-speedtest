@@ -16,7 +16,7 @@ setTags() {
 		cd "$path"
 		echo "$(date) - Checking for updates..."
 		git fetch origin
-		git fetch --tags
+		git fetch --tags -f
 		echo "$(date) - Getting latest tag..."
 		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
 	fi
