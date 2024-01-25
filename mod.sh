@@ -209,7 +209,7 @@ uninstall() {
 }
 
 abort() {
-	if [ $aborted -eq 1 ]; then
+	if (( $aborted == 1 )); then
 		exit 1
 	fi
 	aborted=1
