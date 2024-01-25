@@ -15,13 +15,16 @@ setTags() {
 
 	if [ ! -z "$path" ]; then
 		cd "$path"
+		echo "$(date) - Checking Tags..."
 		git fetch origin -q
+		echo "$(date) - Getting Latest Tag..."
 		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
 	fi
 	if [ ! -z "$name" ]; then
 		localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
 		[ "$localTag" == "HEAD" ] && localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 7)
 	fi
+	echo "$(date) - Latest Tag: $latestTag"
 }
 
 download() {
