@@ -196,7 +196,9 @@ uninstall() {
 		fi
 
 		pihole -a -su
+		echo "$(date) - Downloading Original Files..."
 		download /var/www/html admin https://github.com/pi-hole/AdminLTE web
+		echo "$(date) - Restoring Original Files..."
 		cd /opt/pihole/
 		cp webpage.sh.org webpage.sh
 		chmod +x webpage.sh
