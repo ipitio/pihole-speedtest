@@ -47,8 +47,12 @@ download() {
 		if [ ! -z "$src" ]; then
 			if [ "$url" != "old" ]; then
 				git config --global --add safe.directory "$dest"
-				git remote -v | grep -q "old" || git remote rename origin old
-				git remote -v | grep -q "origin" && git remote remove origin
+				if ! git remote -v | grep -q "old"; then
+					git remote rename origin old
+				fi
+				if git remote -v | grep -q "origin"; then
+					git remote remove origin
+				fi
 				git remote add origin $url
 			else
 				git remote rename origin new
@@ -196,9 +200,7 @@ uninstall() {
 		fi
 
 		pihole -a -su
-		echo "$(date) - Downloading Original Files..."
 		download /var/www/html admin https://github.com/pi-hole/AdminLTE web
-		echo "$(date) - Restoring Original Files..."
 		cd /opt/pihole/
 		cp webpage.sh.org webpage.sh
 		chmod +x webpage.sh
