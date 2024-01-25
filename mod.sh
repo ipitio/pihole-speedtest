@@ -12,20 +12,16 @@ help() {
 setTags() {
 	local path=${1-}
 	local name=${2-}
-	echo "$(date) - In SetTags..."
 	if [ ! -z "$path" ]; then
-		echo "$(date) - Path: $path"
 		cd "$path"
-		echo "$(date) - Checking Tags..."
+		git fetch --tags -q
 		git fetch origin -q
-		echo "$(date) - Getting Latest Tag..."
 		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
 	fi
 	if [ ! -z "$name" ]; then
 		localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
 		[ "$localTag" == "HEAD" ] && localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 7)
 	fi
-	echo "$(date) - Latest Tag: $latestTag"
 }
 
 download() {
@@ -34,7 +30,6 @@ download() {
 	local url=$3
 	local src=${4-}
 	local dest=$path/$name
-	echo "$(date) - A..."
 	if [ ! -d $dest ]; then # replicate
 		cd "$path"
 		rm -rf "$name"
@@ -47,11 +42,9 @@ download() {
 			fi
 		fi
 	else # replace
-		echo "$(date) - B...$dest"
 		setTags $dest
 		if [ ! -z "$src" ]; then
 			if [ "$url" != "old" ]; then
-				echo "$(date) - C..."
 				git config --global --add safe.directory "$dest"
 				if ! git remote -v | grep -q "old"; then
 					git remote rename origin old
@@ -61,18 +54,15 @@ download() {
 				fi
 				git remote add origin $url
 			else
-				echo "$(date) - D..."
 				git remote rename origin new
 				git remote rename old origin
 				git remote remove new
 			fi
-			echo "$(date) - E..."
 			git fetch origin -q
 		fi
-		echo "$(date) - F..."
 		git reset --hard origin/master
 	fi
-	echo "$(date) - G..."
+
 	#git -c advice.detachedHead=false checkout $latestTag
 	cd ..
 }
@@ -198,7 +188,7 @@ uninstall() {
 		if [ ! -f /opt/pihole/webpage.sh.bak ]; then
 			cp pihole/webpage.sh pihole/webpage.sh.bak
 		fi
-		echo "$(date) - Checking org..."
+
 		if [ ! -f /opt/pihole/webpage.sh.org ]; then
 			if [ ! -d /opt/org_pihole ]; then
 				download /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
@@ -207,11 +197,9 @@ uninstall() {
 			cp org_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh.org
 			rm -rf org_pihole
 		fi
-		echo "$(date) - Running su..."
+
 		pihole -a -su
-		echo "$(date) - Downloading Original Files..."
 		download /var/www/html admin https://github.com/pi-hole/AdminLTE web
-		echo "$(date) - Restoring Original Files..."
 		cd /opt/pihole/
 		cp webpage.sh.org webpage.sh
 		chmod +x webpage.sh
