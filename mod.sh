@@ -107,6 +107,7 @@ install() {
 		cp /var/www/html/admin/scripts/pi-hole/speedtest/speedtest.db /etc/pihole/
 	fi
 
+	pihole -a -s
 	pihole updatechecker local
 }
 
@@ -115,7 +116,7 @@ hashFile() {
 }
 
 purge() {
-	echo "$(date) - Removing backups..."
+	echo "$(date) - Cleaning up..."
 	rm -rf /opt/pihole/webpage.sh.*
 	rm -rf /var/www/html/*_admin
 	rm -rf /etc/pihole/speedtest.db.*
@@ -125,6 +126,8 @@ purge() {
 	if [ -f $init_db ] && [ "$(hashFile $init_db)" == "$(hashFile /etc/pihole/speedtest.db)" ]; then
 		rm -f /etc/pihole/speedtest.db
 	fi
+
+	pihole -a -su
 	exit 0
 }
 
@@ -170,7 +173,7 @@ uninstall() {
 
 		download /var/www/html admin https://github.com/pi-hole/AdminLTE web
 		cd /opt/pihole/
-		mv webpage.sh.org webpage.sh
+		cp webpage.sh.org webpage.sh
 		chmod +x webpage.sh
 	fi
 
