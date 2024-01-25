@@ -30,7 +30,7 @@ download() {
 	local url=$3
 	local src=${4-}
 	local dest=$path/$name
-
+	echo "$(date) - A..."
 	if [ ! -d $dest ]; then # replicate
 		cd "$path"
 		rm -rf "$name"
@@ -43,9 +43,11 @@ download() {
 			fi
 		fi
 	else # replace
+		echo "$(date) - B..."
 		setTags $dest
 		if [ ! -z "$src" ]; then
 			if [ "$url" != "old" ]; then
+				echo "$(date) - C..."
 				git config --global --add safe.directory "$dest"
 				if ! git remote -v | grep -q "old"; then
 					git remote rename origin old
@@ -55,15 +57,18 @@ download() {
 				fi
 				git remote add origin $url
 			else
+				echo "$(date) - D..."
 				git remote rename origin new
 				git remote rename old origin
 				git remote remove new
 			fi
+			echo "$(date) - E..."
 			git fetch origin -q
 		fi
+		echo "$(date) - F..."
 		git reset --hard origin/master
 	fi
-
+	echo "$(date) - G..."
 	#git -c advice.detachedHead=false checkout $latestTag
 	cd ..
 }
