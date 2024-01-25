@@ -12,7 +12,7 @@ help() {
 setTags() {
 	local path=${1-}
 	local name=${2-}
-
+	echo "$(date) - In SetTags..."
 	if [ ! -z "$path" ]; then
 		echo "$(date) - Path: $path"
 		cd "$path"
@@ -47,7 +47,7 @@ download() {
 			fi
 		fi
 	else # replace
-		echo "$(date) - B..."
+		echo "$(date) - B...$dest"
 		setTags $dest
 		if [ ! -z "$src" ]; then
 			if [ "$url" != "old" ]; then
