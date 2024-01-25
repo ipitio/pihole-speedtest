@@ -16,16 +16,12 @@ setTags() {
 		cd "$path"
 		git fetch origin -q
 		git fetch --tags -f -q
-		echo "$(date) - Getting latest tag..."
 		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
-		echo "$(date) - Latest tag: $latestTag"
 	fi
 	if [ ! -z "$name" ]; then
 		localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 6)
 		[ "$localTag" == "HEAD" ] && localTag=$(pihole -v | grep "$name" | cut -d ' ' -f 7)
-		echo "$(date) - Local tag: $localTag"
 	fi
-	echo "$(date) - Set tags!"
 }
 
 download() {
@@ -42,9 +38,7 @@ download() {
 		if [ ! -z "$src" ]; then
 			if [[ "$localTag" == *.* ]] && [[ "$localTag" < "$latestTag" ]]; then
 				latestTag=$localTag
-				echo "$(date) - Local tag is newer!"
 				git fetch --unshallow
-				echo "$(date) - Unshallowed!"
 			fi
 		fi
 	else # replace
@@ -68,7 +62,7 @@ download() {
 		fi
 		git reset --hard origin/master
 	fi
-	echo "$(date) - Downloaded $name!"
+
 	#git -c advice.detachedHead=false checkout $latestTag
 	cd ..
 }
