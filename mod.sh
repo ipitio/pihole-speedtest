@@ -139,7 +139,6 @@ update() {
 	if [ "${1-}" == "un" ]; then
 		purge
 	fi
-	apt-get update
 }
 
 manageHistory() {
