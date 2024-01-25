@@ -15,7 +15,7 @@ setTags() {
 
 	if [ ! -z "$path" ]; then
 		cd "$path"
-		git fetch --tags -q
+		git fetch origin -q
 		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
 	fi
 	if [ ! -z "$name" ]; then
