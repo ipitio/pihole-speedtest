@@ -15,8 +15,8 @@ setTags() {
 	if [ ! -z "$path" ]; then
 		cd "$path"
 		echo "$(date) - Checking for updates...$path"
-		git fetch origin -q
-		git fetch --tags -q
+		git fetch origin
+		git fetch --tags
 		echo "$(date) - Getting latest tag..."
 		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
 	fi
