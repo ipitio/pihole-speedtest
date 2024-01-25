@@ -14,7 +14,9 @@ setTags() {
 	local name=${2-}
 	if [ ! -z "$path" ]; then
 		cd "$path"
+		echo "$(date) - Checking for updates..."
 		git fetch origin -q
+		echo "$(date) - Getting latest tag..."
 		latestTag=$(git describe --tags $(git rev-list --tags --max-count=1))
 	fi
 	if [ ! -z "$name" ]; then
