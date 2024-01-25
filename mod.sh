@@ -55,9 +55,8 @@ download() {
 				git remote rename old origin
 				git remote remove new
 			fi
-			git fetch --tags -q
+			git fetch origin -q
 		fi
-		git remote update
 		git reset --hard origin/master
 	fi
 
