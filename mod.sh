@@ -222,7 +222,7 @@ abort() {
 		mv /etc/pihole/speedtest.db.old /etc/pihole/speedtest.db
 	fi
 
-	if ! cat /opt/pihole/webpage.sh | grep -q SpeedTest; then
+	if [ ! -f /opt/pihole/webpage.sh ] || ! cat /opt/pihole/webpage.sh | grep -q SpeedTest; then
 		purge
 	fi
 
