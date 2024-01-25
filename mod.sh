@@ -194,7 +194,7 @@ uninstall() {
 		if [ ! -f /opt/pihole/webpage.sh.bak ]; then
 			cp pihole/webpage.sh pihole/webpage.sh.bak
 		fi
-
+		echo "$(date) - Checking org..."
 		if [ ! -f /opt/pihole/webpage.sh.org ]; then
 			if [ ! -d /opt/org_pihole ]; then
 				download /opt org_pihole https://github.com/pi-hole/pi-hole Pi-hole
@@ -203,7 +203,7 @@ uninstall() {
 			cp org_pihole/advanced/Scripts/webpage.sh pihole/webpage.sh.org
 			rm -rf org_pihole
 		fi
-
+		echo "$(date) - Running su..."
 		pihole -a -su
 		echo "$(date) - Downloading Original Files..."
 		download /var/www/html admin https://github.com/pi-hole/AdminLTE web
