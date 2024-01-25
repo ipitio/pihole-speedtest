@@ -209,6 +209,11 @@ uninstall() {
 }
 
 abort() {
+	if [ $aborted -eq 1 ]; then
+		exit 1
+	fi
+	aborted=1
+
 	echo "$(date) - Process Aborting..." | sudo tee -a /var/log/pimod.log
 
 	if [ -f /opt/pihole/webpage.sh.bak ]; then
@@ -255,8 +260,10 @@ main() {
 		sudo "$0" "$@"
 		exit $?
 	fi
+	aborted=0
 	set -Eeuo pipefail
-	trap '[ "$?" -eq "0" ] && commit || abort $op' EXIT
+	trap '[ "$?" -eq "0" ] && commit || abort' EXIT
+	trap 'abort' INT TERM ERR
 
 	local db=$([ "$op" == "up" ] && echo "${3-}" || [ "$op" == "un" ] && echo "${2-}" || echo "$op")
 	case $op in
