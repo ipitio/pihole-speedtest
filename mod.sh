@@ -57,7 +57,7 @@ download() {
 			fi
 			git fetch --tags -q
 		fi
-		git remote set-head origin master
+		git remote update
 		git reset --hard origin/master
 	fi
 
