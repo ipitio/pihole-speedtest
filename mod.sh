@@ -111,7 +111,7 @@ manageHistory() {
 }
 
 install() {
-	echo "$(date) - Installing any missing dependencies..."
+	echo "$(date) - Installing Latest Speedtest Mod (and any missing dependencies)"
 
 	if [ ! -f /usr/local/bin/pihole ]; then
 		echo "$(date) - Installing Pi-hole..."
@@ -159,8 +159,6 @@ install() {
 		rm -f /usr/local/bin/speedtest
 		ln -s /usr/bin/speedtest /usr/local/bin/speedtest
 	fi
-
-	echo "$(date) - Installing Latest Speedtest Mod..."
 
 	download /opt mod_pihole https://github.com/ipitio/pi-hole
 	download /var/www/html admin https://github.com/ipitio/AdminLTE web
@@ -258,7 +256,7 @@ abort() {
 }
 
 commit() {
-	echo "$(date) - Almost Done..."
+	echo "$(date) - Cleaning Up..."
 	cd $admin_dir/admin
 	git remote -v | grep -q "old" && git remote remove old
 	rm -f $last_wp
