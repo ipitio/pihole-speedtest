@@ -142,7 +142,7 @@ install() {
 	fi
 
     local PHP_VERSION=$(php -v | head -n 1 | awk '{print $2}' | cut -d "." -f 1,2)
-    local packages="sqlite3 ${PHP_VERSION}-sqlite3 jq"
+    local packages="sqlite3 php${PHP_VERSION}-sqlite3 jq"
     for package in $packages; do
         if dpkg -s $package >/dev/null 2>&1; then
             packages=$(echo $packages | sed "s/$package//")
@@ -151,7 +151,9 @@ install() {
     if ! dpkg -s speedtest >/dev/null 2>&1 && ! dpkg -s speedtest-cli >/dev/null 2>&1; then
         packages="$packages speedtest"
     fi
-    [ ! -z "$packages" ] && apt-get install -y $packages
+    if [ ! -z "$(echo $packages | sed 's/ //g')" ]; then
+        apt-get install -y $packages
+    fi
 
 	if [ -f /usr/local/bin/speedtest ]; then
 		rm -f /usr/local/bin/speedtest
