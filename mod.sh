@@ -159,7 +159,7 @@ install() {
 			cp $curr_wp $last_wp
 		fi
 	fi
-	cp mod_pihole/advanced/Scripts/webpage.sh $curr_wp
+	cp /opt/mod_pihole/advanced/Scripts/webpage.sh $curr_wp
 	chmod +x $curr_wp
 	manageHistory db .
 	pihole -a -s
