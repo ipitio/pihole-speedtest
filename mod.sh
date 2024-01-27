@@ -155,10 +155,12 @@ install() {
             packages=$(echo $packages | sed "s/$package//")
         fi
     done
+    echo "packages: $packages"
     if notInstalled speedtest && notInstalled speedtest-cli; then
         packages="$packages speedtest"
     fi
     if [ ! -z "${packages##*( )}" ]; then
+        echo "packages: $packages"
         apt-get install -y $packages
     fi
 
