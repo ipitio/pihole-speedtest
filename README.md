@@ -1,4 +1,5 @@
-<div style="align: center;">
+<div style="text-align: center;">
+<div style="align: justify;">
 
 # Pi-hole Speedtest Mod
 
@@ -8,6 +9,7 @@ Test your connection speed directly in the Pi-hole web interface!
 
 ![Dashboard](assets/dashboard.png)
 
+</div>
 </div>
 
 ---
