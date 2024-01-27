@@ -111,7 +111,7 @@ manageHistory() {
 }
 
 notInstalled() {
-    apt-cache policy "$1" | grep -q 'Installed: (none)'
+    apt-cache policy "$1" | grep 'Installed: (none)' >/dev/null
     local status=$?
     echo "Debug: notInstalled $1 - Status: $status"
     return $status
