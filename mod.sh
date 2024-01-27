@@ -153,6 +153,8 @@ install() {
 
     local missing_packages=""
     for package in $packages; do
+        echo "package: $package"
+        echo "notInstalled: $(notInstalled "$package")"
         if notInstalled "$package"; then
             missing_packages="$missing_packages $package"
         fi
@@ -161,7 +163,7 @@ install() {
         missing_packages="$missing_packages speedtest"
     fi
     missing_packages=$(echo "$missing_packages" | xargs)
-
+    echo "missing_packages: $missing_packages"
     if [ ! -z "${missing_packages}" ]; then
         apt-get install -y $missing_packages
     fi
