@@ -154,6 +154,8 @@ install() {
         if notInstalled "$package"; then
             echo "$package is not installed."
             missing_packages="$missing_packages $package"
+        else
+            echo "$package is installed."
         fi
     done
     if notInstalled speedtest && notInstalled speedtest-cli; then
