@@ -112,9 +112,6 @@ manageHistory() {
 
 notInstalled() {
     apt-cache policy "$1" | grep 'Installed: (none)' >/dev/null
-    local status=$?
-    echo "Debug: notInstalled $1 - Status: $status"
-    return $status
 }
 
 install() {
@@ -153,19 +150,15 @@ install() {
 
     local missing_packages=""
     for package in $packages; do
-        echo "package: $package"
         if notInstalled "$package"; then
             echo "$package is not installed."
             missing_packages="$missing_packages $package"
-        else
-            echo "$package is installed."
         fi
     done
     if notInstalled speedtest && notInstalled speedtest-cli; then
         missing_packages="$missing_packages speedtest"
     fi
     missing_packages=$(echo "$missing_packages" | xargs)
-    echo "missing_packages: $missing_packages"
     if [ ! -z "${missing_packages}" ]; then
         apt-get install -y $missing_packages
     fi
