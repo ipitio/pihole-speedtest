@@ -29,6 +29,7 @@ help() {
     echo "up - update Pi-hole (along with the Mod)"
     echo "un - remove the mod (including all backups)"
     echo "db - flush database (restore for a short while after)"
+    echo "If no option is specified, the Mod will be (re)installed."
 }
 
 setTags() {
@@ -151,7 +152,6 @@ install() {
     local missing_packages=""
     for package in $packages; do
         if notInstalled "$package"; then
-            echo "$package is not installed."
             missing_packages="$missing_packages $package"
         fi
     done
