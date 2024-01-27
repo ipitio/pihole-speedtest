@@ -111,10 +111,7 @@ manageHistory() {
 }
 
 notInstalled() {
-    if apt-cache policy $1 | grep -q 'Installed: (none)'; then
-        return 0
-    fi
-    return 1
+    apt-cache policy "$1" | grep -q 'Installed: (none)'
 }
 
 install() {
@@ -154,8 +151,8 @@ install() {
     local missing_packages=""
     for package in $packages; do
         echo "package: $package"
-        echo "notInstalled: $(notInstalled "$package")"
         if notInstalled "$package"; then
+            echo "$package is not installed."
             missing_packages="$missing_packages $package"
         fi
     done
