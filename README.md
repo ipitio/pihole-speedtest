@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-<div style="align: justify;">
+<div style="align: center;">
 
 # Pi-hole Speedtest Mod
 
