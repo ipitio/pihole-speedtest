@@ -180,7 +180,7 @@ install() {
     chmod +x $curr_wp
     manageHistory db .
     pihole -a -s &
-    pihole updatechecker local
+    pihole updatechecker local &
 }
 
 uninstall() {
