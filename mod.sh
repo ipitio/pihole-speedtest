@@ -252,7 +252,7 @@ abort() {
 
     if (($aborted == 0)); then
         pihole restartdns
-        echo "Please try again or try manually.\n$(date)"
+        printf "Please try again or try manually.\n$(date)"
     fi
     aborted=1
     exit 1
@@ -263,12 +263,12 @@ commit() {
     git remote -v | grep -q "old" && git remote remove old
     rm -f $last_wp
     pihole restartdns
-    echo "Done!\n$(date)"
+    printf "Done!\n$(date)"
     exit 0
 }
 
 main() {
-    printf "Thanks for using Speedtest Mod!\nScript by @ipitio\n$(date)\n"
+    printf "Thanks for using Speedtest Mod!\nScript by @ipitio\n\n$(date)\n\n"
     local op=${1-}
     if [ "$op" == "-h" ] || [ "$op" == "--help" ]; then
         help
