@@ -179,7 +179,7 @@ install() {
     cp /opt/mod_pihole/advanced/Scripts/webpage.sh $curr_wp
     chmod +x $curr_wp
     manageHistory db .
-    pihole -a -s
+    pihole -a -s &
     pihole updatechecker local
 }
 
