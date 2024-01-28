@@ -279,7 +279,7 @@ main() {
         exit $?
     fi
     aborted=0
-    set -Eeuo pipefail
+    set -Eeuxo pipefail
     trap '[ "$?" -eq "0" ] && commit || abort' EXIT
     trap 'abort' INT TERM
 
