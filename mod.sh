@@ -252,7 +252,7 @@ abort() {
 
     if (($aborted == 0)); then
         pihole restartdns
-        printf "Please try again or try manually.\n$(date)"
+        printf "Please try again or try manually.\n\n$(date)\n"
     fi
     aborted=1
     exit 1
@@ -263,7 +263,7 @@ commit() {
     git remote -v | grep -q "old" && git remote remove old
     rm -f $last_wp
     pihole restartdns
-    printf "Done!\n$(date)"
+    printf "Done!\n\n$(date)\n"
     exit 0
 }
 
