@@ -54,7 +54,7 @@ You can also run the Mod Script inside every new container yourself. For example
     build:
         dockerfile_inline: |
             FROM pihole/pihole:latest
-            RUN curl -sSLN https://github.com/arevindh/pi-hole/raw/master/advanced/Scripts/speedtestmod/mod.sh | sudo bash
+            RUN curl -sSLN https://github.com/arevindh/pihole-speedtest/master/mod | sudo bash
 
 Then pull and rebuild without cache:
 
@@ -65,3 +65,5 @@ Then pull and rebuild without cache:
 Buy @arevindh a ☕️ if you like this project :)
 
 <a href="https://www.buymeacoffee.com/itsmesid" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
+@ipitio is not accepting donations at this time, but a star is always appreciated!
